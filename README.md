@@ -86,6 +86,11 @@ Your work must:
 ###![](readmefiles/p1p1.jpg)
 ###![](readmefiles/p2p1.jpg)
 ###![](readmefiles/p3p1.jpg)
+##Paper Prototype 2 for News Hag:
+###![](readmefiles/p21.jpg)
+###![](readmefiles/p22.jpg)
+###![](readmefiles/p23.jpg)
+###![](readmefiles/p24.jpg)
 ##..
 
 ######Rest still under construction**
