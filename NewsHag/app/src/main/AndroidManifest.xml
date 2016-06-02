@@ -23,7 +23,8 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".Top10NewsD" />
-        <activity android:name=".FavoritesD"></activity>
+        <activity android:name=".FavoritesD" />
+        <activity android:name=".WebViewForFavorites"></activity>
     </application>
 
 </manifest>
