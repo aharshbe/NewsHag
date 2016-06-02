@@ -42,6 +42,7 @@ public class NavD extends AppCompatActivity
         checkFirstRun();
 
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -172,38 +173,8 @@ public class NavD extends AppCompatActivity
     public void checkFirstRun() {
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
         if (isFirstRun) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setMessage("Would you like to recieve the latest news from News Hag?");
-            builder1.setCancelable(true);
 
-            builder1.setPositiveButton(
-                    "Yes please!",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Toast.makeText(NavD.this, "Great you'll recieve stuff!", Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
-
-                            NOTIFICATIONisAllowed();
-
-                            return;
-
-
-                        }
-                    });
-
-            builder1.setNegativeButton(
-                    "No thanks.",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Toast.makeText(NavD.this, "Oh okay, nothing then", Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
-
-
-                        }
-                    });
-
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+            MainDialogue();
 
 
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
@@ -219,5 +190,126 @@ public class NavD extends AppCompatActivity
     public void clickingSettings(MenuItem item) {
         Intent intent = new Intent(NavD.this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void firstDialogue() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("To search for the latest news based on your favorite topic, click the magnifying glass in the top right-hand corner and enter your topic!");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        secondDialogue();
+
+                        return;
+
+
+                    }
+                });
+
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
+
+    public void secondDialogue() {
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        builder2.setMessage("To view the Top 10 most popular stories, swipe from the left or click the 3 lines in the top-left");
+        builder2.setCancelable(true);
+
+        builder2.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                        return;
+
+
+                    }
+                });
+
+
+        AlertDialog alert12 = builder2.create();
+        alert12.show();
+    }
+
+    public void ThirdDialogue() {
+        AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
+        builder3.setMessage("Would you like tips on how to use the app?");
+        builder3.setCancelable(true);
+
+        builder3.setPositiveButton(
+                "Yes please!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        firstDialogue();
+
+                        return;
+
+
+                    }
+                });
+
+        builder3.setNegativeButton(
+                "No thanks.",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(NavD.this, "Oh okay, nothing then, you pro user you", Toast.LENGTH_LONG).show();
+                        dialog.cancel();
+
+
+                    }
+                });
+
+
+        AlertDialog alert13 = builder3.create();
+        alert13.show();
+    }
+
+    public void MainDialogue() {
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Would you like to recieve the latest news from News Hag?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes please!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(NavD.this, "Great you'll recieve stuff!", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+
+                        NOTIFICATIONisAllowed();
+                        ThirdDialogue();
+
+
+                        return;
+
+
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No thanks.",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(NavD.this, "Oh okay, nothing then", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+
+                        ThirdDialogue();
+
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
