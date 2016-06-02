@@ -77,10 +77,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         //The data will be replaced with the new results from the api call below.
         mContentResolver.delete(AppContentProvider.CONTENT_URI,null,null);
 
-        //Do api call to nytimes to get new data
+        //Do api call to nytimes to get new data; gson stuff goes here...
         String data ="";
         try {
-            URL url = new URL("http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/30.json?&api-key=32745a781e294518bb53be1cd4f68718");
+            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all" +
+                    ".json?limit=10?&api-key=32745a781e294518bb53be1cd4f68718");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             InputStream inStream = connection.getInputStream();
@@ -96,8 +97,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
         for (int i = 0; i < result.getResults().size(); i++) {
             ContentValues values = new ContentValues();
-            values.put("title",result.getResults().get(i).getTitle());
-            mContentResolver.insert(NewsContentProvider.CONTENT_URI,values);
+            values.put("title",result.getResults().get(i).getTITLE());
+            mContentResolver.insert(AppContentProvider.CONTENT_URI,values);
 //            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
         }
     }
@@ -122,5 +123,4 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         return builder.toString();
     }
-
 }
