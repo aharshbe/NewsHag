@@ -7,4 +7,5 @@
     <string name="examplepar">“They said that without Gorbachev they would have ended up as small merchants in the market, criminals dealing in contraband,” said Alexei Venediktov, a close friend and the editor in chief of the radio station Echo of Moscow, the main news outlet for liberal Russians. “They said: ‘Now we are the owners of all this thanks to Gorbachev! Not a kopeck!’”
 
 </string>
+    <string name="send_intent_title">Send a message via:</string>
 </resources>
