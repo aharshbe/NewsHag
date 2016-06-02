@@ -2,6 +2,7 @@ package badassapps.aaron.newshag;
 
 import android.widget.ArrayAdapter;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import org.json.JSONArray;
@@ -55,10 +56,9 @@ public class Top10Model {
                         {
 
                             try {
-                                JSONObject jsonObject = response.getJSONObject("response");
-                                JSONArray jsonArray = jsonObject.getJSONArray("results");
+//                                JSONArray jsonArray = response.getJSONArray("results");
+//                                JSONObject url = jsonArray.getJSONObject("url");
                                 items = new LinkedList<>();
-
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject title = jsonArray.getJSONObject(i);
