@@ -37,7 +37,7 @@
 
 
         <service
-            android:name="badassapps.aaron.newshag.MySyncService">
+            android:name="badassapps.aaron.newshag.MySyncServices">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
