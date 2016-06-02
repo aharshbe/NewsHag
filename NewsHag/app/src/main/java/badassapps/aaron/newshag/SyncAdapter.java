@@ -80,7 +80,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         //Do api call to nytimes to get new data
         String data ="";
         try {
-            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=d1934738c85789ae6e8dac61ddca1abc%3A12%3A74602111");
+            URL url = new URL("http://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/30.json?&api-key=32745a781e294518bb53be1cd4f68718");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             InputStream inStream = connection.getInputStream();
@@ -91,7 +91,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         //Organize our out response by using gson to instantiate a SearchResult data model.
         Gson gson = new Gson();
-        NewsItem result = gson.fromJson(data,NewsItem.class);
+        Article result = gson.fromJson(data,Article.class);
 
         //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
         for (int i = 0; i < result.getResults().size(); i++) {
