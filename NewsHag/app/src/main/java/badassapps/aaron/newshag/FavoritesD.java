@@ -1,7 +1,10 @@
 package badassapps.aaron.newshag;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,6 +29,11 @@ public class FavoritesD extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites_d);
+
+        if (isFirstTime()) {
+            deleteOnLongPress();
+        }
+
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView2);
@@ -53,7 +62,6 @@ public class FavoritesD extends AppCompatActivity {
         mList.add(article6);
 
 
-
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,6 +83,7 @@ public class FavoritesD extends AppCompatActivity {
         });
 
     }
+
     public class CustomAdapter extends ArrayAdapter {
 
         Context mContext;
@@ -108,6 +117,44 @@ public class FavoritesD extends AppCompatActivity {
         }
     }
 
+    public void deleteOnLongPress() {
+
+        AlertDialog.Builder favoritesDeleteDiag = new AlertDialog.Builder(this);
+        favoritesDeleteDiag.setMessage("In order to delete items from your favorites list, just long press on them!");
+        favoritesDeleteDiag.setCancelable(true);
+
+
+        favoritesDeleteDiag.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        dialog.cancel();
+
+
+                        return;
+
+
+                    }
+                });
+
+
+        AlertDialog alertDialog = favoritesDeleteDiag.create();
+        alertDialog.show();
+    }
+
+    private boolean isFirstTime() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        boolean ranBefore = preferences.getBoolean("RanBefore", false);
+        if (!ranBefore) {
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("RanBefore", true);
+            editor.commit();
+        }
+        return !ranBefore;
+    }
 
 
 }
