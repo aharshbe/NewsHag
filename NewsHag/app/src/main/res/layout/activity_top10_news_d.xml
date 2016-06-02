@@ -7,6 +7,6 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="badassapps.aaron.newshag.StoryDetailActivity">
+    tools:context="badassapps.aaron.newshag.Top10NewsD">
 
 </RelativeLayout>
