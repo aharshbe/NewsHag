@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     public class CustomAdapter extends ArrayAdapter {
 
         Context mContext;
