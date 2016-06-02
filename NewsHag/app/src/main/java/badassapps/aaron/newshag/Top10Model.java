@@ -1,16 +1,13 @@
 package badassapps.aaron.newshag;
 
-import android.widget.ArrayAdapter;
-
-import com.google.gson.Gson;
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import cz.msebera.android.httpclient.Header;
 
