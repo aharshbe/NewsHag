@@ -1,6 +1,7 @@
 package badassapps.aaron.newshag;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,20 +36,44 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-
-
-
-
         Article article = new Article("www.google.com", "This is the image", "This is the title");
         Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
-
+        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
 
 
         mList.add(article);
+
         mList.add(article2);
+
+        mList.add(article3);
+
+        mList.add(article4);
+
+        mList.add(article5);
+
+        mList.add(article6);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(MainActivity.this, Top10NewsD.class);
+                myIntent.putExtra("position", position);
+                Article article = mList.get(position);
+                myIntent.putExtra("article", article);
+                startActivity(myIntent);
+            }
+        });
+
+
+
 
 
     }
+
+
 
     public class CustomAdapter extends ArrayAdapter {
 
@@ -60,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             mContext = context;
             mLayoutResource = layoutResource;
             mList = list;
-            layoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         }
 
@@ -78,24 +104,15 @@ public class MainActivity extends AppCompatActivity {
                 image.setText(mList.get(position).getID());
 
 
-
-
-
             }
 
-
-            //inflate list item using mLayoutResource
-
-            //access views inside the list item
-
-            //use position to access the correct data from mList
-
-            //put the data in the view - textView.setText(mList.get(position).getMyText())
-
-            //return the inflated list item
 
             return convertView;
         }
 
+
+
     }
+
+
 }
