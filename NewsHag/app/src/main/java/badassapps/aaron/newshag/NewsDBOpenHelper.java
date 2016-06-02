@@ -20,33 +20,20 @@ public class    NewsDBOpenHelper extends SQLiteOpenHelper {
 
     public static final String COL_ID = "_id";
     public static final String COL_URL = "URL";
-
-    public static final String [] COLUMNS = {
-            COL_ID, COL_URL};
-
-    private static final String CREATE_NEWS_HAG_TABLE = "CREATE TABLE " + NEWS_HAG_TABLE + "(" +
-            COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL_URL + " TEXT)";
-
-    public static NewsDBOpenHelper instance;
-
-
-    public static NewsDBOpenHelper getInstance(Context context){
-        if (instance == null){
-            instance = new NewsDBOpenHelper(context, null, null, 1);
-        }
-        return instance;
-    }
-    public NewsDBOpenHelper(Context context, Object o, Object o1, int i) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public static final String COL_FAV = "favorites";
+    public NewsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int
+            version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_NEWS_HAG_TABLE);
-        addDefaultData(db);
+        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
+                NEWS_HAG_TABLE + "("
+                + COL_ID + " INTEGER PRIMARY KEY," + COL_URL
+                + " TEXT, "+ COL_FAV + " INTEGER)";
+        db.execSQL(CREATE_PRODUCTS_TABLE);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -70,31 +57,28 @@ public class    NewsDBOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor displayFavorites(){
+    public Cursor displayFavorites() {
         SQLiteDatabase database = this.getReadableDatabase();
 
         //add more columns?
-        String [] projection = new String[]{COL_ID, COL_URL};
+        String[] projection = new String[]{COL_ID, COL_URL};
 
         Cursor cursor = database.query(NEWS_HAG_TABLE, projection, null, null, null, null, null, null);
         DatabaseUtils.dumpCursor(cursor);
         return cursor;
     }
-
-
-    public Cursor getAllArticles() {
-        String[] projection = {COL_ID, COL_URL};
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(NEWS_HAG_TABLE, projection, null, null, null, null, null);
-        return cursor;
-    }
-
-
     public long addArticle(ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         long insertedRow = db.insert(NEWS_HAG_TABLE, null, values);
         return insertedRow;
+    }
+
+    public Cursor getAllArticles() {
+        String[] projection = {COL_ID, COL_URL, COL_FAV};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(NEWS_HAG_TABLE,projection,null,null,null,null,null);
+        return cursor;
     }
 
     public int deleteAllArticles() {

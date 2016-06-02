@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by austin on 6/1/16.
  */
-public class Article implements Parcelable {
+public class Article extends SearchResult implements Parcelable {
 
     String URL;
     String ID;

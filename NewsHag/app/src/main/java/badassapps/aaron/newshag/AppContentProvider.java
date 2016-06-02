@@ -15,7 +15,7 @@ public class AppContentProvider extends ContentProvider{
 
 
     private NewsDBOpenHelper myDB;
-    private static final String AUTHORITY = "ly.generalassemb.drewmahrt.syncadapterexample.NewsContentProvider";
+    private static final String AUTHORITY = "badassapps.aaron.newshag.AppContentProvider";
     private static final String ARTICLES_TABLE = "articles";
     public static final Uri CONTENT_URI = Uri.parse("content://"
             + AUTHORITY + "/" + ARTICLES_TABLE);
