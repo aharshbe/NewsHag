@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,17 +39,18 @@ public class Top10NewsD extends AppCompatActivity {
         Toast.makeText(Top10NewsD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
     }
 
+
+    public void clickingShare(MenuItem item) {
+        Toast.makeText(Top10NewsD.this, "You clicked share", Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.shared_icon, menu);
         inflater.inflate(R.menu.making_fav, menu);
-
-
         return true;
     }
 
-    public void clickingShare(MenuItem item) {
-        Toast.makeText(Top10NewsD.this, "You clicked share", Toast.LENGTH_SHORT).show();
-    }
 }
