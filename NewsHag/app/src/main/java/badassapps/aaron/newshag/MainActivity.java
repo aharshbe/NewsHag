@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,27 +45,27 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(this, R.layout.list_items, mList);
         listView.setAdapter(adapter);
 
-
-
-        Article article = new Article("www.google.com", "This is the image", "This is the title");
-        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
-
-
-        mList.add(article);
-
-        mList.add(article2);
-
-        mList.add(article3);
-
-        mList.add(article4);
-
-        mList.add(article5);
-
-        mList.add(article6);
+//
+//
+//        Article article = new Article("www.google.com", "This is the image", "This is the title");
+//        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
+//        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
+//        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
+//        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
+//        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
+//
+//
+//        mList.add(article);
+//
+//        mList.add(article2);
+//
+//        mList.add(article3);
+//
+//        mList.add(article4);
+//
+//        mList.add(article5);
+//
+//        mList.add(article6);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+
+    public void clickingFavs(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, FavoritesD.class);
+        startActivity(intent);
     }
 
     public class CustomAdapter extends ArrayAdapter {
