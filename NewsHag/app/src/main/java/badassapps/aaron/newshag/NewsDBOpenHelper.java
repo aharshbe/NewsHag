@@ -33,11 +33,11 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
 
     public static NewsDBOpenHelper getInstance(Context context){
         if (instance == null){
-            instance = new NewsDBOpenHelper(context);
+            instance = new NewsDBOpenHelper(context, null, null, 1);
         }
         return instance;
     }
-    public NewsDBOpenHelper(Context context) {
+    public NewsDBOpenHelper(Context context, Object o, Object o1, int i) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -58,8 +58,17 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add data here
-
+        
     }
+
+    public boolean insertFavorite(String url){
+        SQLiteDatabase database =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("url", url);
+        database.insert("Saved Stories", null, values);
+        return true;
+    }
+
 
     public Cursor displayBookmarks(){
         SQLiteDatabase database = this.getReadableDatabase();
@@ -72,4 +81,26 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+    public Cursor getAllArticles() {
+        String[] projection = {COL_ID, COL_URL};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(NEWS_HAG_TABLE, projection, null, null, null, null, null);
+        return cursor;
+    }
+
+
+    public long addArticle(ContentValues values) {
+        SQLiteDatabase db = getWritableDatabase();
+        long insertedRow = db.insert(NEWS_HAG_TABLE, null, values);
+        return insertedRow;
+    }
+
+    public int deleteAllArticles() {
+        SQLiteDatabase db = getWritableDatabase();
+
+        int rowsDeleted = db.delete(NEWS_HAG_TABLE,null,null);
+        return rowsDeleted;
+    }
 }

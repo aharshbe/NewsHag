@@ -1,14 +1,8 @@
 package badassapps.aaron.newshag;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.v7.widget.SearchView;
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +32,9 @@ public class Top10NewsD extends AppCompatActivity {
     }
 
     public void clickingFavsToAdd(MenuItem item) {
+
         Toast.makeText(Top10NewsD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
