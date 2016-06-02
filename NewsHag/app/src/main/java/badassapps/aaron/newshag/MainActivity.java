@@ -10,12 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-<<<<<<< HEAD
-=======
-
-import android.view.LayoutInflater;
 import android.view.MenuItem;
->>>>>>> 0d753c94291cf748e7f842c49779176abae289a1
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
