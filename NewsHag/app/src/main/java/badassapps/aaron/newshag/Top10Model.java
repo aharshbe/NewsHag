@@ -70,7 +70,6 @@ public class Top10Model {
                             catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     }
                 });
