@@ -32,6 +32,24 @@
         <activity android:name=".WebViewForFavorites" />
         <activity android:name=".WebViewForTop10"></activity>
 
+
+        <service
+            android:name="badassapps.aaron.newshag.MySyncService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+
+        <provider
+            android:name=".NewsContentProvider"
+            android:authorities="ly.generalassemb.drewmahrt.syncadapterexample.NewsContentProvider"
+            android:label="my provider"
+            android:exported="false"
+            android:syncable="true"/>
+
     </application>
 
 </manifest>

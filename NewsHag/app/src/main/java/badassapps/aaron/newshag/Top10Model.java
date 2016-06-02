@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import cz.msebera.android.httpclient.Header;
@@ -49,7 +50,7 @@ public class Top10Model {
         client.get(
                 CONSTRUCT ,null,
                 new JsonHttpResponseHandler(){
-                    LinkedList<String> items;
+                    ArrayList<Article> items;
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -64,21 +65,21 @@ public class Top10Model {
 //                                        .getJSONArray("media-metadata").getJSONObject(1)
 //                                        .getJSONObject("url");
 
-                                items = new LinkedList<>();
+                                items = new ArrayList<>();
 
                                 for (int i = 0; i < responseObject.length(); i++) {
                                     JSONObject url = responseObject.getJSONObject(i);
-                                    JSONObject title = responseObject.getJSONObject(i);
                                         if (!url.has("url")) continue;
                                         items.add(url.getString("url"));
+                                    JSONObject title = responseObject.getJSONObject(i);
                                         if (!title.has("title")) continue;
                                         items.add(url.getString("title"));
                                     JSONObject getMedia = responseObject.getJSONObject(i);
                                         if (!getMedia.has("media")) continue;
-                                    for(int j = 0; j < getMedia.length(); j++){
-
-                                    }
-
+                                    JSONArray mediaMeta = getMedia.getJSONArray("media-metadata");
+                                    JSONObject metaURL = mediaMeta.getJSONObject(0);
+                                        if (!metaURL.has("url")) continue;
+                                        items.add(url.getString("url"));
                                 }
                                 responseHandler.handleResponse(items);
                             }
@@ -91,6 +92,6 @@ public class Top10Model {
     }
 
     public interface ApiResponseHandler{
-        void handleResponse(LinkedList response);
+        void handleResponse(ArrayList<Article> mList);
     }
 }

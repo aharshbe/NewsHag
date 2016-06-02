@@ -56,7 +56,6 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
 
         //add data here
 
-
     }
 
     public Cursor displayBookmarks(){

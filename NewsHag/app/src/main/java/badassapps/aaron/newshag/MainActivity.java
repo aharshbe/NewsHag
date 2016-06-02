@@ -33,7 +33,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements Top10Model.ApiResponseHandler{
 
     ArrayList<Article> mList;
     CustomAdapter adapter;
@@ -96,32 +97,10 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.cancel(1);
         }
 
-
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
         adapter = new CustomAdapter(this, R.layout.list_items, mList);
         listView.setAdapter(adapter);
-
-
-        Article article = new Article("www.google.com", "This is the image", "This is the title");
-        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
-
-
-        mList.add(article);
-
-        mList.add(article2);
-
-        mList.add(article3);
-
-        mList.add(article4);
-
-        mList.add(article5);
-
-        mList.add(article6);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //Our request to Top10Model for JSON Parsing
+        Top10Model.getInstance(MainActivity.this).doRequest();
     }
 
     public void clickingFavs(MenuItem item) {
@@ -225,4 +205,14 @@ public class MainActivity extends AppCompatActivity {
                     .apply();
         }
     }
+
+    @Override
+    public void handleResponse(ArrayList<Article> response) {
+        mList = response;
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+        adapter.addAll(mList);
+    }
 }
+
+
