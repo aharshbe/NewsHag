@@ -91,6 +91,8 @@ Your work must:
 ###![](readmefiles/p22.jpg)
 ###![](readmefiles/p23.jpg)
 ###![](readmefiles/p24.jpg)
+###![](readmefiles/p2t1.png)
+###![](readmefiles/p2t2.png)
 ##..
 
 ######Rest still under construction**

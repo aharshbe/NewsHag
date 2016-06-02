@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void clickingFavs(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, FavoritesD.class);
+        startActivity(intent);
+    }
 
 
     public class CustomAdapter extends ArrayAdapter {
