@@ -31,7 +31,6 @@
 
         <activity android:name=".FavoritesD" />
         <activity android:name=".WebViewForFavorites" />
-<<<<<<< HEAD
         <activity android:name=".WebViewForTop10"></activity>
 
         <service
@@ -53,11 +52,6 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
-
-||||||| merged common ancestors
-        <activity android:name=".WebViewForTop10"></activity>
-=======
-        <activity android:name=".WebViewForTop10" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,7 +60,5 @@
             </intent-filter>
 
         </activity>
->>>>>>> aharshbe-master
     </application>
-
 </manifest>
