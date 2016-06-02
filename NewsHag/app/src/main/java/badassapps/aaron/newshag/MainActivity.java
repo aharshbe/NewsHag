@@ -190,9 +190,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     //Will inflate our menu's search functionality
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        getSupportActionBar().setIcon(R.drawable.newhag);
         inflater.inflate(R.menu.search, menu);
         inflater.inflate(R.menu.access_db, menu);
 
@@ -202,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     public void checkFirstRun() {
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
