@@ -41,7 +41,10 @@ public class Top10NewsD extends AppCompatActivity {
 
 
     public void clickingShare(MenuItem item) {
-        Toast.makeText(Top10NewsD.this, "You clicked share", Toast.LENGTH_SHORT).show();
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "this is a test");
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
 
     }
 
