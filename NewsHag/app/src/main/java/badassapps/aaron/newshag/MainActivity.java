@@ -367,6 +367,7 @@ public class MainActivity extends AppCompatActivity{
             super(handler);
         }
 
+
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread

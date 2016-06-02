@@ -10,19 +10,14 @@
 
     <application
         android:allowBackup="true"
+        android:banner="@drawable/newhag"
         android:icon="@mipmap/ic_news"
         android:label="News Hag"
         android:logo="@drawable/newhag"
-        android:banner="@drawable/newhag"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -36,6 +31,7 @@
 
         <activity android:name=".FavoritesD" />
         <activity android:name=".WebViewForFavorites" />
+<<<<<<< HEAD
         <activity android:name=".WebViewForTop10"></activity>
 
         <service
@@ -58,6 +54,19 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
+||||||| merged common ancestors
+        <activity android:name=".WebViewForTop10"></activity>
+=======
+        <activity android:name=".WebViewForTop10" />
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+>>>>>>> aharshbe-master
     </application>
 
 </manifest>
