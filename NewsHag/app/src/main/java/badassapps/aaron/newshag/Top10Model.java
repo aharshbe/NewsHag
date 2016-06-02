@@ -42,7 +42,7 @@ public class Top10Model {
         return instance;
     }
 
-    public void doRequest(LinkedList response){
+    public void doRequest(){
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(
