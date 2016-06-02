@@ -10,6 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by tiannan.mcclanahan on 6/1/16.
  */
+
+//Our favorites database (added by: Aaron on 6/2/2016)
+
 public class NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "News.db";
