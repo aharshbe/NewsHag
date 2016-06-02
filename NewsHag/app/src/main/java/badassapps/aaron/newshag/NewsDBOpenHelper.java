@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 //Our favorites database (added by: Aaron on 6/2/2016)
 
-public class NewsDBOpenHelper extends SQLiteOpenHelper {
+public class    NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
@@ -70,7 +70,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor displayBookmarks(){
+    public Cursor displayFavorites(){
         SQLiteDatabase database = this.getReadableDatabase();
 
         //add more columns?

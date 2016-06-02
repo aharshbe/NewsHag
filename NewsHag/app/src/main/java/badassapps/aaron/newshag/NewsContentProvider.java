@@ -12,13 +12,13 @@ import android.net.Uri;
 public class NewsContentProvider extends ContentProvider {
 
     private NewsDBOpenHelper myDB;
-    private static final String AUTHOURITY = "badassapps.aaron.newshag.NewsContentProvider";
+    private static final String AUTHORITY = "badassapps.aaron.newshag.NewsContentProvider";
     private static final String ARTICLES_TABLE = "articles";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHOURITY + "/" + ARTICLES_TABLE);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ARTICLES_TABLE);
     public static final int ARTICLES = 1;
     public static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-    static {sURIMatcher.addURI(AUTHOURITY, ARTICLES_TABLE, ARTICLES);}
+    static {sURIMatcher.addURI(AUTHORITY, ARTICLES_TABLE, ARTICLES);}
 
     @Override
     public boolean onCreate(){
