@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -73,10 +74,12 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         mAccount = createSyncAccount(this);
+        Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,
+                null);
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new CustomAdapter(this, R.layout.list_items, mList);
+        adapter = new CustomAdapter(MainActivity.this, cursor, 0);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,19 +128,20 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public class CustomAdapter extends ArrayAdapter {
+    //CustomAdapter for our Cursor
+    public class CustomAdapter extends CursorAdapter {
+        private LayoutInflater cursorInflater;
 
-        Context mContext;
-        int mLayoutResource;
-        ArrayList<Article> mList;
+        public CustomAdapter(Context context, Cursor cursor, int flags) {
+            super(context, cursor, flags);
+            cursorInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
 
-        public CustomAdapter(Context context, int layoutResource, ArrayList<Article> list) {
-            super(context, layoutResource, list);
-            mContext = context;
-            mLayoutResource = layoutResource;
-            mList = list;
-            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
 
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return LayoutInflater.from(context).inflate(R.layout.activity_main, parent, false);
         }
 
         @Override
@@ -152,12 +156,25 @@ public class MainActivity extends AppCompatActivity{
                 url.setText(mList.get(position).getURL());
                 TextView image = (TextView) convertView.findViewById(R.id.image);
                 image.setText(mList.get(position).getID());
-
             }
             return convertView;
         }
-    }
 
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+
+            // Find fields to populate in inflated template
+            TextView title = (TextView) findViewById(R.id.title);
+            TextView url = (TextView) findViewById(R.id.url);
+            TextView image = (TextView) findViewById(R.id.image);
+
+            // Extract properties from cursor
+            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
+
+            // Populate fields with extracted properties
+            url.setText(urlString);
+        }
+    }
 
     //Will inflate our menu's search functionality
     @Override
@@ -221,9 +238,9 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
-//            adapter.swapCursor
-//                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
-//                    null, null));
+            adapter.swapCursor
+                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
+                    null, null));
         }
     }
 }
