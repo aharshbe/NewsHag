@@ -241,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        getSupportActionBar().setIcon(R.drawable.newhag);
         inflater.inflate(R.menu.search, menu);
         inflater.inflate(R.menu.access_db, menu);
 

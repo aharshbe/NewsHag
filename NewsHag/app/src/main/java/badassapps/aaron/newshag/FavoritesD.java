@@ -95,7 +95,7 @@ public class FavoritesD extends AppCompatActivity {
 
             if (convertView == null) {
 
-                convertView = layoutInflater.inflate(R.layout.fav_items, parent, false);
+                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
                 TextView title = (TextView) convertView.findViewById(R.id.title);
                 title.setText(mList.get(position).getTITLE());
                 TextView url = (TextView) convertView.findViewById(R.id.url);
