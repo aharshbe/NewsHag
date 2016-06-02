@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
         checkFirstRun();
 
 
@@ -249,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
                     .apply();
 
         }
+
+
 
 
     }
