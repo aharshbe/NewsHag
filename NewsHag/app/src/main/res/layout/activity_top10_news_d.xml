@@ -50,7 +50,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/image"
-        android:background="#d4181f"
+        android:background="@drawable/exampleimage"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
