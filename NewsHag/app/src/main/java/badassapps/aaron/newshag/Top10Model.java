@@ -56,14 +56,29 @@ public class Top10Model {
                         {
 
                             try {
-//                                JSONArray jsonArray = response.getJSONArray("results");
-//                                JSONObject url = jsonArray.getJSONObject("url");
+                                JSONArray responseObject = response.getJSONArray("results");
+
+//                                JSONObject url = responseObject.getJSONObject("url");
+//                                JSONObject title = responseObject.getJSONObject("title");
+//                                JSONObject media = responseObject.getJSONObject("media")
+//                                        .getJSONArray("media-metadata").getJSONObject(1)
+//                                        .getJSONObject("url");
+
                                 items = new LinkedList<>();
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject title = jsonArray.getJSONObject(i);
-                                    if (!title.has("webUrl")) continue;
-                                    items.add(title.getString("webUrl"));
+                                for (int i = 0; i < responseObject.length(); i++) {
+                                    JSONObject url = responseObject.getJSONObject(i);
+                                    JSONObject title = responseObject.getJSONObject(i);
+                                        if (!url.has("url")) continue;
+                                        items.add(url.getString("url"));
+                                        if (!title.has("title")) continue;
+                                        items.add(url.getString("title"));
+                                    JSONObject getMedia = responseObject.getJSONObject(i);
+                                        if (!getMedia.has("media")) continue;
+                                    for(int j = 0; j < getMedia.length(); j++){
+
+                                    }
+
                                 }
                                 responseHandler.handleResponse(items);
                             }
