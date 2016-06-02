@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 //Our favorites database (added by: Aaron on 6/2/2016)
 
-public class NewsDBOpenHelper extends SQLiteOpenHelper {
+public class    NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
@@ -41,6 +41,32 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    private void addDefaultData(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        //add data here
+        
+    }
+
+    public boolean insertFavorite(String url){
+        SQLiteDatabase database =this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("url", url);
+        database.insert("Saved Stories", null, values);
+        return true;
+    }
+
+
+    public Cursor displayFavorites() {
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        //add more columns?
+        String[] projection = new String[]{COL_ID, COL_URL};
+
+        Cursor cursor = database.query(NEWS_HAG_TABLE, projection, null, null, null, null, null, null);
+        DatabaseUtils.dumpCursor(cursor);
+        return cursor;
+    }
     public long addArticle(ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         long insertedRow = db.insert(NEWS_HAG_TABLE, null, values);
