@@ -25,10 +25,13 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".Top10NewsD" />
+
+        <activity android:name=".Top10NewsD"></activity>
+
         <activity android:name=".FavoritesD" />
         <activity android:name=".WebViewForFavorites" />
         <activity android:name=".WebViewForTop10"></activity>
+
     </application>
 
 </manifest>
