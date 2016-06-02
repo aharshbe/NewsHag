@@ -15,15 +15,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.SearchView;
+
 import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -50,18 +54,60 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
         checkFirstRun();
 
 
+        mList = new ArrayList<>();
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new CustomAdapter(this, R.layout.list_items, mList);
+        listView.setAdapter(adapter);
+
+
+        Article article = new Article("www.google.com", "This is the image", "This is the title");
+        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
+
+
+        mList.add(article);
+
+        mList.add(article2);
+
+        mList.add(article3);
+
+        mList.add(article4);
+
+        mList.add(article5);
+
+        mList.add(article6);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(MainActivity.this, Top10NewsD.class);
+                myIntent.putExtra("position", position);
+                Article article = mList.get(position);
+                myIntent.putExtra("article", article);
+                startActivity(myIntent);
+            }
+        });
+
+
+    }
+
+    private void NOTIFICATIONisAllowed() {
+
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         //If there is internet connection then the user will be presented with a notification that displays the top story
         if (networkInfo != null && networkInfo.isConnected()) {
-            Intent intent1 = new Intent(this, MainActivity.class);
+            Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
 
-            PendingIntent pendingIntent1 = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent1, 0);
+            PendingIntent pendingIntent1 = PendingIntent.getActivity(MainActivity.this, (int) System.currentTimeMillis(), intent1, 0);
 
             NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
             bigPictureStyle.bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.news)).build();
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this);
             mBuilder.setSmallIcon(R.drawable.ic_chrome_reader_mode_black_24dp);
             mBuilder.setContentTitle("BREAKING NEWS!");
             mBuilder.setContentText("The News Hag team: Check out the latest story!");
@@ -75,15 +121,15 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
 
         } else {
             //If there is no internet connection present, the user is presented with a notification that lasts 30 seconds with the option to go into settings and turn it on via click
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
             Intent intent1 = new Intent(Settings.ACTION_WIFI_SETTINGS);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-            PendingIntent pendingIntent1 = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent1, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, (int) System.currentTimeMillis(), intent, 0);
+            PendingIntent pendingIntent1 = PendingIntent.getActivity(MainActivity.this, (int) System.currentTimeMillis(), intent1, 0);
 
 
             NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this);
             mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
             mBuilder.setContentTitle("No internet connection!");
             mBuilder.setContentText("To use the app, please enable WIFI, Thanks!");
@@ -113,8 +159,43 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
             }
         });
 
-        //Our request to Top10Model for JSON Parsing
-        Top10Model.getInstance(MainActivity.this).doRequest();
+        mList = new ArrayList<>();
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new CustomAdapter(this, R.layout.list_items, mList);
+        listView.setAdapter(adapter);
+
+
+        Article article = new Article("www.google.com", "This is the image", "This is the title");
+        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
+        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
+
+
+        mList.add(article);
+
+        mList.add(article2);
+
+        mList.add(article3);
+
+        mList.add(article4);
+
+        mList.add(article5);
+
+        mList.add(article6);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(MainActivity.this, Top10NewsD.class);
+                myIntent.putExtra("position", position);
+                Article article = mList.get(position);
+                myIntent.putExtra("article", article);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     public void clickingFavs(MenuItem item) {
@@ -157,9 +238,12 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
 
 
     //Will inflate our menu's search functionality
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        getSupportActionBar().setIcon(R.drawable.newhag);
         inflater.inflate(R.menu.search, menu);
         inflater.inflate(R.menu.access_db, menu);
 
@@ -169,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
 
         return true;
     }
+
 
     public void checkFirstRun() {
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
@@ -183,6 +268,12 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
                         public void onClick(DialogInterface dialog, int id) {
                             Toast.makeText(MainActivity.this, "Great you'll recieve stuff!", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
+
+                            NOTIFICATIONisAllowed();
+
+                            return;
+
+
                         }
                     });
 
@@ -192,6 +283,8 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
                         public void onClick(DialogInterface dialog, int id) {
                             Toast.makeText(MainActivity.this, "Oh okay, nothing then", Toast.LENGTH_SHORT).show();
                             dialog.cancel();
+
+
                         }
                     });
 
@@ -203,7 +296,10 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
                     .edit()
                     .putBoolean("isFirstRun", false)
                     .apply();
+
         }
+
+
     }
 
     @Override
@@ -214,5 +310,4 @@ public class MainActivity extends AppCompatActivity implements Top10Model.ApiRes
         adapter.addAll(mList);
     }
 }
-
 

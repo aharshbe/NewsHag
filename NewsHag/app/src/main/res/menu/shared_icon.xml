@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_favorite"
-        android:icon="@drawable/f222"
+        android:icon="@drawable/s6"
+        android:onClick="clickingShare"
         android:title="@string/action_favorite"
-        android:onClick="clickingFavsToAdd"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>
