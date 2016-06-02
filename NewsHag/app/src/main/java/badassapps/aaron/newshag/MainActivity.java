@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
         checkFirstRun();
 
 
@@ -194,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        getSupportActionBar().setIcon(R.drawable.newhag);
         inflater.inflate(R.menu.search, menu);
         inflater.inflate(R.menu.access_db, menu);
 
@@ -249,6 +250,8 @@ public class MainActivity extends AppCompatActivity {
                     .apply();
 
         }
+
+
 
 
     }
