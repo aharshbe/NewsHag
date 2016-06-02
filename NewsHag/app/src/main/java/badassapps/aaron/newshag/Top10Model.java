@@ -26,7 +26,7 @@ public class Top10Model {
 
 //    private static final String FORMAT_STRING = "&nojsoncallback=1&format=json";
 
-    private final String CONSTRUCT = NYTIMES_SEARCH_ALL + API_KEY;
+    private final String CONSTRUCT = NYTIMES_SEARCH_ALL + API_KEY + NYTimesAppData.API_KEY;
 
     //Empty constructor
     private Top10Model(){
