@@ -16,19 +16,10 @@
         android:logo="@drawable/newhag"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
-        <activity android:name=".Top10NewsD"></activity>
-
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".Top10NewsD" />
         <activity android:name=".FavoritesD" />
         <activity android:name=".WebViewForFavorites" />
         <activity android:name=".WebViewForTop10"></activity>
@@ -58,7 +49,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".NavD"
+            android:label="@string/title_activity_nav_d"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 </manifest>
