@@ -22,8 +22,8 @@ public class WebViewForFavorites extends AppCompatActivity {
         final ProgressDialog pd = ProgressDialog.show(this, "", "Loading...", true);
 
 
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
+        webView.getSettings().getTextZoom();
         webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClient() {
 
