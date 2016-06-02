@@ -215,4 +215,9 @@ public class NavD extends AppCompatActivity
 
 
     }
+
+    public void clickingSettings(MenuItem item) {
+        Intent intent = new Intent(NavD.this, SettingsActivity.class);
+        startActivity(intent);
+    }
 }

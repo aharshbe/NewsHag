@@ -9,14 +9,14 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_splash);
 
         Thread background = new Thread() {
             public void run() {
 
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(1 * 1000);
+                    sleep(3 * 1000);
 
                     // After 5 seconds redirect to another intent
                     Intent i = new Intent(getBaseContext(), NavD.class);
