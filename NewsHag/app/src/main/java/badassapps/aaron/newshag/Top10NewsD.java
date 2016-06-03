@@ -65,7 +65,7 @@ public class Top10NewsD extends AppCompatActivity {
     public void clickingShare(MenuItem item) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "this is a test");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getIntent().getStringExtra("url"));
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
 
     }
