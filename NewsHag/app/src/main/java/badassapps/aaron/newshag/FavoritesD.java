@@ -41,27 +41,6 @@ public class FavoritesD extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        Article article = new Article("www.google.com", "This is the image", "This is the title");
-        Article article2 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article3 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article4 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article5 = new Article("www.yahoo.com", "This is the image", "This is the title");
-        Article article6 = new Article("www.yahoo.com", "This is the image", "This is the title");
-
-
-        mList.add(article);
-
-        mList.add(article2);
-
-        mList.add(article3);
-
-        mList.add(article4);
-
-        mList.add(article5);
-
-        mList.add(article6);
-
-
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +89,7 @@ public class FavoritesD extends AppCompatActivity {
                 TextView url = (TextView) convertView.findViewById(R.id.url);
                 url.setText(mList.get(position).getURL());
                 TextView image = (TextView) convertView.findViewById(R.id.image);
-                image.setText(mList.get(position).getID());
+                image.setText(mList.get(position).getIMAGE());
 
             }
             return convertView;

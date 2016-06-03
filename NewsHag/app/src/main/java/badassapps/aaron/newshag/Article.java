@@ -3,19 +3,27 @@ package badassapps.aaron.newshag;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by austin on 6/1/16.
  */
 public class Article extends SearchResult implements Parcelable {
 
+    @SerializedName("url")
     String URL;
-    String ID;
+    @SerializedName("title")
     String TITLE;
+    @SerializedName("abstract")
+    String ABSTRACT;
+    @SerializedName("thumbnail_standard")
+    String IMAGE;
 
-    public Article(String URL, String ID, String TITLE) {
+    public Article(String URL, String TITLE, String ABSTRACT, String IMAGE) {
         this.URL = URL;
-        this.ID = ID;
         this.TITLE = TITLE;
+        this.ABSTRACT = ABSTRACT;
+        this.IMAGE = IMAGE;
     }
 
     public String getTITLE() {
@@ -34,12 +42,20 @@ public class Article extends SearchResult implements Parcelable {
         this.URL = URL;
     }
 
-    public String getID() {
-        return ID;
+    public String getABSTRACT() {
+        return ABSTRACT;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setABSTRACT(String ABSTRACT) {
+        this.ABSTRACT = ABSTRACT;
+    }
+
+    public String getIMAGE() {
+        return IMAGE;
+    }
+
+    public void setIMAGE(String IMAGE) {
+        this.IMAGE = IMAGE;
     }
 
     @Override
@@ -50,13 +66,11 @@ public class Article extends SearchResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.URL);
-        dest.writeString(this.ID);
         dest.writeString(this.TITLE);
     }
 
     protected Article(Parcel in) {
         this.URL = in.readString();
-        this.ID = in.readString();
         this.TITLE = in.readString();
     }
 

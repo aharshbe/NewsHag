@@ -10,6 +10,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 public class AppContentProvider extends ContentProvider{
 
@@ -35,6 +36,7 @@ public class AppContentProvider extends ContentProvider{
     public boolean onCreate() {
         myDB = new NewsDBOpenHelper(getContext(), null, null, 1);
         return false;
+
     }
     /*
      * Return no type for MIME type

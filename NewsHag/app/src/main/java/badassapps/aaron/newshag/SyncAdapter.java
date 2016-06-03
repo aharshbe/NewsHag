@@ -84,6 +84,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
                     ".json?limit=10?&api-key=32745a781e294518bb53be1cd4f68718");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
+            Log.d("TAG","started");
             InputStream inStream = connection.getInputStream();
             data = getInputData(inStream);
         } catch (Throwable e) {
@@ -97,7 +98,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
         for (int i = 0; i < result.getResults().size(); i++) {
             ContentValues values = new ContentValues();
+
             values.put("title",result.getResults().get(i).getTITLE());
+            values.put("url", result.getResults().get(i).getURL());
+            values.put("thumbnail_standard", result.getResults().get(i).getIMAGE());
+            values.put("abstract", result.getResults().get(i).getABSTRACT());
+
             mContentResolver.insert(AppContentProvider.CONTENT_URI,values);
 //            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
         }

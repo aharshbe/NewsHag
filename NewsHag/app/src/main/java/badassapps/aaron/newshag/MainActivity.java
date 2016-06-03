@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -76,7 +77,8 @@ public class MainActivity extends AppCompatActivity{
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new CustomAdapter(this, R.layout.list_items, mList);
+        Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,37 +127,57 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public class CustomAdapter extends ArrayAdapter {
+    //CustomAdapter for our Cursor
+    public class CustomAdapter extends CursorAdapter {
+        private LayoutInflater cursorInflater;
 
-        Context mContext;
-        int mLayoutResource;
-        ArrayList<Article> mList;
-
-        public CustomAdapter(Context context, int layoutResource, ArrayList<Article> list) {
-            super(context, layoutResource, list);
-            mContext = context;
-            mLayoutResource = layoutResource;
-            mList = list;
-            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public CustomAdapter(Context context, Cursor cursor, int flags) {
+            super(context, cursor, flags);
+            cursorInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
 
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if (convertView == null) {
-
-                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
-                TextView title = (TextView) convertView.findViewById(R.id.title);
-                title.setText(mList.get(position).getTITLE());
-                TextView url = (TextView) convertView.findViewById(R.id.url);
-                url.setText(mList.get(position).getURL());
-                TextView image = (TextView) convertView.findViewById(R.id.image);
-                image.setText(mList.get(position).getID());
-
-            }
-            return convertView;
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+
+            // Find fields to populate in inflated template
+            TextView title = (TextView) view.findViewById(R.id.title);
+            TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
+            TextView image = (TextView) view.findViewById(R.id.image);
+
+            // Extract properties from cursor
+//            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
+            String titleString = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+            String imageString = cursor.getString(cursor.getColumnIndexOrThrow("thumbnail_" +
+                    "standard"));
+            String abstractString = cursor.getString(cursor.getColumnIndexOrThrow("abstract"));
+
+            // Populate fields with extracted properties
+            abstract1.setText(abstractString);
+            image.setText(imageString);
+            title.setText(titleString);
+        }
+
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//
+//            if (convertView == null) {
+//
+//                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
+//                TextView title = (TextView) convertView.findViewById(R.id.title);
+//                title.setText(mList.get(position).getTITLE());
+//                TextView url = (TextView) convertView.findViewById(R.id.url);
+//                url.setText(mList.get(position).getURL());
+//                TextView image = (TextView) convertView.findViewById(R.id.image);
+//                image.setText(mList.get(position).getIMAGE());
+//            }
+//            return convertView;
+//        }
     }
 
 
@@ -221,9 +243,9 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
-//            adapter.swapCursor
-//                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
-//                    null, null));
+            adapter.swapCursor
+                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
+                    null, null));
         }
     }
 }

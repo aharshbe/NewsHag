@@ -14,13 +14,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 //Our favorites database (added by: Aaron on 6/2/2016)
 
 public class NewsDBOpenHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
 
     public static final String COL_ID = "_id";
     public static final String COL_URL = "URL";
     public static final String COL_FAV = "favorites";
+    public static final String COL_TITLE = "title";
+    public static final String COL_THUMBNAIL = "thumbnail_standard";
+    public static final String COL_ABSTRACT = "abstract";
     public NewsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int
             version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -31,7 +34,8 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
                 NEWS_HAG_TABLE + "("
                 + COL_ID + " INTEGER PRIMARY KEY," + COL_URL
-                + " TEXT, "+ COL_FAV + " INTEGER)";
+                + " TEXT, "+ COL_FAV + " INTEGER," + COL_TITLE + " TEXT, " + COL_THUMBNAIL +
+                " TEXT, " + COL_ABSTRACT + " TEXT)";
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
@@ -48,7 +52,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getAllArticles() {
-        String[] projection = {COL_ID, COL_URL, COL_FAV};
+        String[] projection = {COL_ID, COL_URL, COL_FAV, COL_TITLE, COL_THUMBNAIL, COL_ABSTRACT};
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(NEWS_HAG_TABLE,projection,null,null,null,null,null);
