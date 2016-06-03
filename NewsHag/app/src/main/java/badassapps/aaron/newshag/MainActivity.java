@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 
+import android.support.v4.content.Loader;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
@@ -175,7 +176,6 @@ public class MainActivity extends AppCompatActivity{
                     (imageString).into
                     (image);
                 title.setText(titleString);}
-
         }
     }
 
@@ -242,9 +242,13 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
-            adapter.swapCursor
-                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
+            Cursor cursor = adapter.swapCursor(getContentResolver().query(AppContentProvider
+                    .CONTENT_URI,
+                    null, null,
                     null, null));
+//            if (cursor != null) {
+//                cursor.close();
+//                }
         }
     }
 }

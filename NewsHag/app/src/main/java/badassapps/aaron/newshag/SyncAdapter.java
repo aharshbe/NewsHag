@@ -81,7 +81,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         String data ="";
         try {
             URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all" +
-                    ".json?limit=10?&api-key=32745a781e294518bb53be1cd4f68718");
+                    ".json?limit=10?&api-key="+NYTimesAppData.API_KEY);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             Log.d("TAG","started");
