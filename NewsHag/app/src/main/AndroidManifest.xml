@@ -19,7 +19,9 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:label="Top 10 News">
+        </activity>
         <activity android:name=".Top10NewsD" />
         <activity android:name=".FavoritesD" />
         <activity android:name=".WebViewForFavorites" />
