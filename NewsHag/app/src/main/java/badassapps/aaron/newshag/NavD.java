@@ -103,18 +103,18 @@ public class NavD extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Currently needs our attention; need to create intent
-                Intent myIntent = new Intent(NavD.this, Top10NewsD.class);
-//                cursor.moveToPosition(position);
-//
-//                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-//                        .COL_TITLE)));
-//                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-//                        .COL_ABSTRACT)));
-//                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-//                        .COL_THUMBNAIL)));
-//                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-//                        .COL_URL)));
-//                startActivity(myIntent);
+                Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
+                cursor.moveToPosition(position);
+
+                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_TITLE)));
+                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_ABSTRACT)));
+                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_THUMBNAIL)));
+                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_URL)));
+                startActivity(myIntent);
             }
         });
 
