@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -290,10 +291,19 @@ public class NavD extends AppCompatActivity
             PendingIntent pendingIntent1 = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent1, 0);
 
 
+            long[] pattern = {500,500,500,500,500,500,500,500,500};
+
+
             NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(NavD.this);
             mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
             mBuilder.setContentTitle("No internet connection!");
+            Notification notification = mBuilder.build();
+            mBuilder.setSound(notification.sound = Uri.parse("android.resource://"
+                    + this.getPackageName() + "/" + R.raw.notif));
+            mBuilder.setVibrate(pattern);
+            mBuilder.setLights(Color.RED, 500, 500);
+            mBuilder.setStyle(new NotificationCompat.InboxStyle());
             mBuilder.setContentText("To use the app, please enable WIFI, Thanks!");
             mBuilder.setContentIntent(pendingIntent);
             mBuilder.setPriority(Notification.PRIORITY_MAX);
