@@ -17,9 +17,7 @@ public class WebViewForTop10 extends AppCompatActivity {
         setContentView(R.layout.activity_web_view_for_top10);
 
         webView = (WebView) findViewById(R.id.loadStory);
-
         final ProgressDialog pd = ProgressDialog.show(this, "", "Loading...", true);
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClient() {

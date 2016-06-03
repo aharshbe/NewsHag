@@ -8,23 +8,40 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 public class Top10NewsD extends AppCompatActivity {
-    TextView body;
+    TextView body, title;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top10_news_d);
 
-
+        String detailTitle = getIntent().getStringExtra("title");
+        String detailAbstract = getIntent().getStringExtra("abstract");
+        String detailThumb = getIntent().getStringExtra("thumbnail");
 
         body = (TextView) findViewById(R.id.body);
+        title = (TextView) findViewById(R.id.title);
+        image = (ImageView) findViewById(R.id.image);
+
         body.setMovementMethod(new ScrollingMovementMethod());
 
+        body.setText(detailAbstract);
+        title.setText(detailTitle);
+        if (detailThumb != null && ! detailThumb.equals("")) {
+            Picasso.with(Top10NewsD.this)
+                    .load
+                            (detailThumb).into
+                    (image);
+        }
     }
 
     public void clickingReadOn(View view) {

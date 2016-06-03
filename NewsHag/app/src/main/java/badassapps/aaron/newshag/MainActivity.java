@@ -39,9 +39,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -77,17 +80,23 @@ public class MainActivity extends AppCompatActivity{
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
         adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(MainActivity.this, Top10NewsD.class);
-                myIntent.putExtra("position", position);
-                Article article = mList.get(position);
-                myIntent.putExtra("article", article);
+                cursor.moveToPosition(position);
+
+                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_TITLE)));
+                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_ABSTRACT)));
+                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_THUMBNAIL)));
                 startActivity(myIntent);
             }
         });
@@ -148,7 +157,7 @@ public class MainActivity extends AppCompatActivity{
             // Find fields to populate in inflated template
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
-            TextView image = (TextView) view.findViewById(R.id.image);
+            ImageView image = (ImageView) view.findViewById(R.id.image);
 
             // Extract properties from cursor
 //            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
@@ -159,8 +168,12 @@ public class MainActivity extends AppCompatActivity{
 
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
-            image.setText(imageString);
-            title.setText(titleString);
+            if (imageString != null && ! imageString.equals("")){ Picasso.with(MainActivity.this)
+                    .load
+                    (imageString).into
+                    (image);
+                title.setText(titleString);}
+
         }
     }
 
