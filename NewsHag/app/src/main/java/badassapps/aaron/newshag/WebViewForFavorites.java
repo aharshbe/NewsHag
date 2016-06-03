@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -48,6 +49,13 @@ public class WebViewForFavorites extends AppCompatActivity {
     }
 
 
+    public void clickingplusFav(View view) {
+        webView.zoomIn();
+    }
+
+    public void clickingminusFav(View view) {
+        webView.zoomOut();
+    }
 }
 
 

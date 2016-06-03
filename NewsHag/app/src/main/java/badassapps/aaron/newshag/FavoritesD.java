@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -107,6 +109,7 @@ public class FavoritesD extends AppCompatActivity {
 
         AlertDialog.Builder favoritesDeleteDiag = new AlertDialog.Builder(this);
         favoritesDeleteDiag.setMessage("In order to delete items from your favorites list, just long press on them!" + "\n" + "**Keep in mind it removes them from top to bottom.");
+        favoritesDeleteDiag.setIcon(R.mipmap.ic_news);
         favoritesDeleteDiag.setCancelable(true);
 
 

@@ -332,6 +332,7 @@ public class NavD extends AppCompatActivity
     //Dialogue stuff goes here.
     public void firstDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
         builder1.setMessage("To search for the latest news based on your favorite topic, click the magnifying glass in the top right-hand corner and enter your topic!");
         builder1.setCancelable(true);
 
@@ -352,6 +353,7 @@ public class NavD extends AppCompatActivity
 
     public void secondDialogue() {
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        builder2.setIcon(R.mipmap.ic_news);
         builder2.setMessage("To view the Top 10 most popular stories, swipe from the left or click the 3 lines in the top-left");
         builder2.setCancelable(true);
 
@@ -371,6 +373,7 @@ public class NavD extends AppCompatActivity
 
     public void ThirdDialogue() {
         AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
+        builder3.setIcon(R.mipmap.ic_news);
         builder3.setMessage("Would you like tips on how to use the app?");
         builder3.setCancelable(true);
 
@@ -402,6 +405,7 @@ public class NavD extends AppCompatActivity
     public void MainDialogue() {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
         builder1.setMessage("Would you like to recieve the latest news from News Hag?");
         builder1.setCancelable(true);
 

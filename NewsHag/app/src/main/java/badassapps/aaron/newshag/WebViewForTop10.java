@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -41,5 +42,13 @@ public class WebViewForTop10 extends AppCompatActivity {
 
         webView.loadUrl(detailUrl);
 
+    }
+
+    public void clickingminus(View view) {
+        webView.zoomOut();
+    }
+
+    public void clickingplus(View view) {
+        webView.zoomIn();
     }
 }
