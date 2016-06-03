@@ -391,12 +391,12 @@ public class NavD extends AppCompatActivity
     }
 
     public void NoInternetDialogue() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("No internet connection, please click below to enable connection!" + "\n" + "\n" + "-Sincerely, your developers");
-        builder1.setCancelable(true);
+        AlertDialog.Builder builder7 = new AlertDialog.Builder(this);
+        builder7.setIcon(R.mipmap.ic_news);
+        builder7.setMessage("No internet connection, please click below to enable connection!" + "\n" + "\n" + "-Sincerely, your developers");
+        builder7.setCancelable(true);
 
-        builder1.setPositiveButton(
+        builder7.setPositiveButton(
                 "Go to connection settings",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -409,7 +409,16 @@ public class NavD extends AppCompatActivity
                     }
                 });
 
-        AlertDialog alert11 = builder1.create();
+        builder7.setNegativeButton(
+                "I'm alright",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(NavD.this, "Totally get it, you'll still be able to see saved stories!", Toast.LENGTH_LONG).show();
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder7.create();
         alert11.show();
 
     }
