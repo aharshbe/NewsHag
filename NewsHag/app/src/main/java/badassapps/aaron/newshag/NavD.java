@@ -56,6 +56,8 @@ public class NavD extends AppCompatActivity
     ListView listView;
     LayoutInflater layoutInflater;
 
+
+
     // Constants
     // Content provider authority
     public static final String AUTHORITY = "badassapps.aaron.newshag.AppContentProvider";
@@ -78,6 +80,7 @@ public class NavD extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         checkFirstRun();
+        NOTIFICATIONBox();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -261,6 +264,54 @@ public class NavD extends AppCompatActivity
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
     }
 
+
+    public void NOTIFICATIONBox(){
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        //If there is internet connection then the user will be presented with a notification that displays the top story
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(6);
+
+
+
+
+
+        } else {
+            NoInternetDialogue();
+
+            Intent intent = new Intent(NavD.this, MainActivity.class);
+            Intent intent1 = new Intent(Settings.ACTION_WIFI_SETTINGS);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent, 0);
+            PendingIntent pendingIntent1 = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent1, 0);
+
+
+            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(NavD.this);
+            mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
+            mBuilder.setContentTitle("No internet connection!");
+            mBuilder.setContentText("To use the app, please enable WIFI, Thanks!");
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setStyle(bigTextStyle);
+            mBuilder.addAction(android.R.drawable.ic_menu_info_details, "Connect WIFI", pendingIntent1);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(6, bigTextStyle.build());
+        }
+
+
+
+
+
+
+    }
+
+
     private void NOTIFICATIONisAllowed() {
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -327,6 +378,30 @@ public class NavD extends AppCompatActivity
     public void clickingSettings(MenuItem item) {
         Intent intent = new Intent(NavD.this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void NoInternetDialogue(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
+        builder1.setMessage("No internet connection, please click below to enable connection!" + "\n" + "\n" + "-Sincerely, your developers");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Go to connection settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        Intent intent1 = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                        startActivity(intent1);
+
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 
     //Dialogue stuff goes here.

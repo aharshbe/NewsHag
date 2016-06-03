@@ -108,7 +108,7 @@ public class FavoritesD extends AppCompatActivity {
     public void deleteOnLongPress() {
 
         AlertDialog.Builder favoritesDeleteDiag = new AlertDialog.Builder(this);
-        favoritesDeleteDiag.setMessage("In order to delete items from your favorites list, just long press on them!" + "\n" + "**Keep in mind it removes them from top to bottom.");
+        favoritesDeleteDiag.setMessage("In order to delete items from your favorites list, just long press on them!" + "\n" + "\n" + "**Keep in mind it removes them from top to bottom.");
         favoritesDeleteDiag.setIcon(R.mipmap.ic_news);
         favoritesDeleteDiag.setCancelable(true);
 
