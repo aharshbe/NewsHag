@@ -16,6 +16,8 @@ public class WebViewForTop10 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_for_top10);
 
+        String detailUrl = getIntent().getStringExtra("url");
+
         webView = (WebView) findViewById(R.id.loadStory);
         final ProgressDialog pd = ProgressDialog.show(this, "", "Loading...", true);
         webView.getSettings().setSupportZoom(true);
@@ -37,7 +39,7 @@ public class WebViewForTop10 extends AppCompatActivity {
             }
         });
 
-        webView.loadUrl("http://www.nytimes.com/2016/06/02/world/europe/mikhail-gorbachev-interview-vladimir-putin.html?hp&action=click&pgtype=Homepage&clickSource=story-heading&module=second-column-region&region=top-news&WT.nav=top-news&_r=0");
+        webView.loadUrl(detailUrl);
 
     }
 }

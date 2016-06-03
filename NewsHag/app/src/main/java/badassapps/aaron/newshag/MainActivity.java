@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity{
                         .COL_ABSTRACT)));
                 myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                         .COL_THUMBNAIL)));
+                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                        .COL_URL)));
                 startActivity(myIntent);
             }
         });
