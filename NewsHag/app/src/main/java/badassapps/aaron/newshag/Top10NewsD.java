@@ -35,6 +35,9 @@ public class Top10NewsD extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         image = (ImageView) findViewById(R.id.image);
         button = (Button) findViewById(R.id.button);
+        title.setMovementMethod(new ScrollingMovementMethod());
+        body.setMovementMethod(new ScrollingMovementMethod());
+
 
         body.setMovementMethod(new ScrollingMovementMethod());
 
