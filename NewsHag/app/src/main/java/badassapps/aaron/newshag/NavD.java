@@ -68,6 +68,8 @@ public class NavD extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
+        inflater.inflate(R.menu.infobutton, menu);
+
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -98,6 +100,9 @@ public class NavD extends AppCompatActivity
 
         if (id == R.id.nav_top10) {
             // Handle the camera action
+
+        } else if (id == R.id.nav_favorites) {
+
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
@@ -312,5 +317,14 @@ public class NavD extends AppCompatActivity
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    public void clickingFavoritesNav(MenuItem item) {
+        Intent intent = new Intent(NavD.this, FavoritesD.class);
+        startActivity(intent);
+    }
+
+    public void clickingInfo(MenuItem item) {
+        firstDialogue();
     }
 }
