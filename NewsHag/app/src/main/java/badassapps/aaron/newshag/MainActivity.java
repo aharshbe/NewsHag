@@ -162,22 +162,6 @@ public class MainActivity extends AppCompatActivity{
             image.setText(imageString);
             title.setText(titleString);
         }
-
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//
-//            if (convertView == null) {
-//
-//                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
-//                TextView title = (TextView) convertView.findViewById(R.id.title);
-//                title.setText(mList.get(position).getTITLE());
-//                TextView url = (TextView) convertView.findViewById(R.id.url);
-//                url.setText(mList.get(position).getURL());
-//                TextView image = (TextView) convertView.findViewById(R.id.image);
-//                image.setText(mList.get(position).getIMAGE());
-//            }
-//            return convertView;
-//        }
     }
 
 
