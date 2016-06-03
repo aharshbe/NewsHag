@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="badassapps.aaron.newshag.MainActivity">
+    tools:context="badassapps.aaron.newshag.MainActivity"
+    android:background="#d4181f">
 
     <ListView
         android:layout_width="match_parent"

@@ -138,14 +138,14 @@ public class NavD extends AppCompatActivity
 
         //REQUESTS A SYNC FOR THE ACCOUNT
         //i.e. if there's no cache, or app hasn't been used for several days...
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
-        ContentResolver.addPeriodicSync(
-                mAccount,
-                AUTHORITY,
-                Bundle.EMPTY,
-                60);
+//        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+//
+//        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+//        ContentResolver.addPeriodicSync(
+//                mAccount,
+//                AUTHORITY,
+//                Bundle.EMPTY,
+//                60);
     }
 
     //CustomAdapter for our Cursor
@@ -203,6 +203,8 @@ public class NavD extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
+        inflater.inflate(R.menu.infobutton, menu);
+
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -233,6 +235,9 @@ public class NavD extends AppCompatActivity
 
         if (id == R.id.nav_top10) {
             // Handle the camera action
+
+        } else if (id == R.id.nav_favorites) {
+
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
@@ -430,7 +435,6 @@ public class NavD extends AppCompatActivity
         alert11.show();
     }
 
-
     /**
      * Create a new dummy account for the sync adapter
      *
@@ -487,5 +491,14 @@ public class NavD extends AppCompatActivity
 //                cursor.close();
 //                }
         }
+    }
+
+    public void clickingFavoritesNav(MenuItem item) {
+        Intent intent = new Intent(NavD.this, FavoritesD.class);
+        startActivity(intent);
+    }
+
+    public void clickingInfo(MenuItem item) {
+        firstDialogue();
     }
 }

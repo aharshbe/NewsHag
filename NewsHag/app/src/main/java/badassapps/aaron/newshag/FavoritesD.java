@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -61,6 +64,10 @@ public class FavoritesD extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void clickingInfo(MenuItem item) {
+        deleteOnLongPress();
     }
 
     public class CustomAdapter extends ArrayAdapter {
@@ -133,6 +140,16 @@ public class FavoritesD extends AppCompatActivity {
             editor.commit();
         }
         return !ranBefore;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.infobutton, menu);
+
+
+        return true;
     }
 
 

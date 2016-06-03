@@ -8,6 +8,11 @@
             android:title="Top 10"
             android:onClick="clickingTopTen"/>
         <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/f1"
+            android:title="Favorites"
+            android:onClick="clickingFavoritesNav"/>
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:title="Settings"
