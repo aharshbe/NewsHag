@@ -42,7 +42,8 @@
                 android:id="@+id/image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="260dp" />
+                android:layout_marginStart="260dp"
+                android:background="@drawable/loading"/>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
