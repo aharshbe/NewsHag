@@ -20,7 +20,7 @@
 
 
         <activity android:name=".MainActivity"
-            android:label="Top 10 News">
+            android:label="Daily Top News">
         </activity>
         <activity android:name=".Top10NewsD" />
         <activity android:name=".FavoritesD" />

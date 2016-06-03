@@ -68,6 +68,8 @@ public class NavD extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search, menu);
+        inflater.inflate(R.menu.infobutton, menu);
+
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -320,5 +322,9 @@ public class NavD extends AppCompatActivity
     public void clickingFavoritesNav(MenuItem item) {
         Intent intent = new Intent(NavD.this, FavoritesD.class);
         startActivity(intent);
+    }
+
+    public void clickingInfo(MenuItem item) {
+        firstDialogue();
     }
 }
