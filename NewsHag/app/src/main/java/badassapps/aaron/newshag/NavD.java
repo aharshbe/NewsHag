@@ -58,7 +58,6 @@ public class NavD extends AppCompatActivity
     LayoutInflater layoutInflater;
 
 
-
     // Constants
     // Content provider authority
     public static final String AUTHORITY = "badassapps.aaron.newshag.AppContentProvider";
@@ -98,7 +97,7 @@ public class NavD extends AppCompatActivity
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listViewNavD);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
         adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
@@ -125,7 +124,7 @@ public class NavD extends AppCompatActivity
 
         //Step 1 (for content resolver)
         //new Handler
-        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI,true, new
+        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
                 NewsContentObserver
                 (new Handler()));
 
@@ -167,6 +166,7 @@ public class NavD extends AppCompatActivity
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
@@ -184,11 +184,13 @@ public class NavD extends AppCompatActivity
 
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
-            if (imageString != null && ! imageString.equals("")){ Picasso.with(NavD.this)
-                    .load
-                            (imageString).into
-                            (image);
-                title.setText(titleString);}
+            if (imageString != null && !imageString.equals("")) {
+                Picasso.with(NavD.this)
+                        .load
+                                (imageString).into
+                        (image);
+                title.setText(titleString);
+            }
         }
     }
 
@@ -266,7 +268,7 @@ public class NavD extends AppCompatActivity
     }
 
 
-    public void NOTIFICATIONBox(){
+    public void NOTIFICATIONBox() {
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -276,9 +278,6 @@ public class NavD extends AppCompatActivity
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(6);
-
-
-
 
 
         } else {
@@ -291,14 +290,12 @@ public class NavD extends AppCompatActivity
             PendingIntent pendingIntent1 = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent1, 0);
 
 
-            long[] pattern = {500,500,500,500,500,500,500,500,500};
-
-
             NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(NavD.this);
             mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
             mBuilder.setContentTitle("No internet connection!");
             Notification notification = mBuilder.build();
+            long[] pattern = {500, 500, 500, 500, 500, 500, 500, 500, 500};
             mBuilder.setSound(notification.sound = Uri.parse("android.resource://"
                     + this.getPackageName() + "/" + R.raw.notif));
             mBuilder.setVibrate(pattern);
@@ -313,10 +310,6 @@ public class NavD extends AppCompatActivity
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(6, bigTextStyle.build());
         }
-
-
-
-
 
 
     }
@@ -360,6 +353,13 @@ public class NavD extends AppCompatActivity
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(NavD.this);
             mBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
             mBuilder.setContentTitle("No internet connection!");
+            Notification notification = mBuilder.build();
+            long[] pattern = {500, 500, 500, 500, 500, 500, 500, 500, 500};
+            mBuilder.setSound(notification.sound = Uri.parse("android.resource://"
+                    + this.getPackageName() + "/" + R.raw.notif));
+            mBuilder.setVibrate(pattern);
+            mBuilder.setLights(Color.RED, 500, 500);
+            mBuilder.setStyle(new NotificationCompat.InboxStyle());
             mBuilder.setContentText("To use the app, please enable WIFI, Thanks!");
             mBuilder.setContentIntent(pendingIntent);
             mBuilder.setPriority(Notification.PRIORITY_MAX);
@@ -390,7 +390,7 @@ public class NavD extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void NoInternetDialogue(){
+    public void NoInternetDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
         builder1.setMessage("No internet connection, please click below to enable connection!" + "\n" + "\n" + "-Sincerely, your developers");
