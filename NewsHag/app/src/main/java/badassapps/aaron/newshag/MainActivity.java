@@ -3,36 +3,44 @@ package badassapps.aaron.newshag;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
-
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+
+import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.SearchView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -64,17 +72,11 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
         mAccount = createSyncAccount(this);
-        Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,
-                null);
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new CustomAdapter(MainActivity.this, cursor, 0);
+        adapter = new CustomAdapter(this, R.layout.list_items, mList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,20 +125,19 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    //CustomAdapter for our Cursor
-    public class CustomAdapter extends CursorAdapter {
-        private LayoutInflater cursorInflater;
+    public class CustomAdapter extends ArrayAdapter {
 
-        public CustomAdapter(Context context, Cursor cursor, int flags) {
-            super(context, cursor, flags);
-            cursorInflater = (LayoutInflater) context.getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
+        Context mContext;
+        int mLayoutResource;
+        ArrayList<Article> mList;
 
-        }
+        public CustomAdapter(Context context, int layoutResource, ArrayList<Article> list) {
+            super(context, layoutResource, list);
+            mContext = context;
+            mLayoutResource = layoutResource;
+            mList = list;
+            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return LayoutInflater.from(context).inflate(R.layout.activity_main, parent, false);
         }
 
         @Override
@@ -151,25 +152,12 @@ public class MainActivity extends AppCompatActivity{
                 url.setText(mList.get(position).getURL());
                 TextView image = (TextView) convertView.findViewById(R.id.image);
                 image.setText(mList.get(position).getID());
+
             }
             return convertView;
         }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-
-            // Find fields to populate in inflated template
-            TextView title = (TextView) findViewById(R.id.title);
-            TextView url = (TextView) findViewById(R.id.url);
-            TextView image = (TextView) findViewById(R.id.image);
-
-            // Extract properties from cursor
-            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
-
-            // Populate fields with extracted properties
-            url.setText(urlString);
-        }
     }
+
 
     //Will inflate our menu's search functionality
     @Override
@@ -233,9 +221,9 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
-            adapter.swapCursor
-                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
-                    null, null));
+//            adapter.swapCursor
+//                    (getContentResolver().query(AppContentProvider.CONTENT_URI, null, null,
+//                    null, null));
         }
     }
 }
