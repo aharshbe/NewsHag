@@ -1,5 +1,7 @@
 package badassapps.aaron.newshag;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ public class SplashScreen extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.splash);
 
+        WelcomeDiaglogue();
+
 
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left);
@@ -30,7 +34,7 @@ public class SplashScreen extends AppCompatActivity {
 
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(2 * 1000);
+                    sleep(3 * 1000);
 
                     // After 5 seconds redirect to another intent
                     Intent i = new Intent(getBaseContext(), NavD.class);
@@ -56,6 +60,26 @@ public class SplashScreen extends AppCompatActivity {
 
         super.onDestroy();
 
+    }
+
+    public void WelcomeDiaglogue() {
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+        builder2.setIcon(R.mipmap.ic_news);
+        builder2.setMessage("Welcome to news hag! Your source for daily news!");
+        builder2.setCancelable(true);
+
+        builder2.setPositiveButton(
+                "Thanks!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert12 = builder2.create();
+        alert12.show();
     }
 
 
