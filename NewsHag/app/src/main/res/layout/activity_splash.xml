@@ -40,7 +40,7 @@
         android:textSize="70sp"
         android:id="@+id/Welcome"
         android:fontFamily="cursive"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/iconforanim"
         android:layout_centerHorizontal="true" />
 
@@ -90,6 +90,5 @@
         android:text="..your daily source of news"
         android:id="@+id/your"
         android:layout_below="@+id/newhag"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="41dp" />
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
