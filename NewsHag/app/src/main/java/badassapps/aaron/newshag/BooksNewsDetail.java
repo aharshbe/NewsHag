@@ -51,7 +51,7 @@ public class BooksNewsDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_books_news_detail);
+        setContentView(R.layout.activity_movies_news_detail);
 
         mAccount = createSyncAccount(this);
 

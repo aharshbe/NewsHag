@@ -4,19 +4,17 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-public class WebViewBooks extends AppCompatActivity {
+public class WebViewMovies extends AppCompatActivity {
 
     WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view_books);
+        setContentView(R.layout.activity_web_view_movies);
 
         webView = (WebView) findViewById(R.id.loadBooks);
 
