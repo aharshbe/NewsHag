@@ -8,24 +8,62 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SplashScreen extends AppCompatActivity {
+
+    ImageView background2, icon;
+    TextView welcome, to, news, urdaily;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ImageView imageView = (ImageView) findViewById(R.id.splash);
+        background2 = (ImageView) findViewById(R.id.splash);
+        icon = (ImageView) findViewById(R.id.iconforanim);
+        welcome = (TextView) findViewById(R.id.Welcome);
+        to = (TextView) findViewById(R.id.to);
+        news = (TextView) findViewById(R.id.newhag);
+        urdaily = (TextView) findViewById(R.id.your);
 
-        WelcomeDiaglogue();
+
+
 
 
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left);
         animation.setDuration(1000);
 
-        imageView.setAnimation(animation);
+        background2.setAnimation(animation);
+
+        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+        animation2.setDuration(2000);
+
+        icon.setAnimation(animation2);
+
+        Animation animation3 = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left);
+        animation3.setDuration(2600);
+
+        welcome.setAnimation(animation3);
+
+        Animation animation4 = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_out_right);
+        animation4.setDuration(2500);
+
+        to.setAnimation(animation4);
+
+        Animation animation5 = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left);
+        animation5.setDuration(2200);
+
+        news.setAnimation(animation5);
+
+        Animation animation6 = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_out_right);
+        animation6.setDuration(3000);
+
+        urdaily.setAnimation(animation6);
+
+
+
 
 
 
@@ -34,7 +72,7 @@ public class SplashScreen extends AppCompatActivity {
 
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(3 * 1000);
+                    sleep(4 * 1000);
 
                     // After 5 seconds redirect to another intent
                     Intent i = new Intent(getBaseContext(), NavD.class);
