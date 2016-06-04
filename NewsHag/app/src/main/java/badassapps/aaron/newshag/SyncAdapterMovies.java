@@ -93,16 +93,18 @@ public class SyncAdapterMovies extends AbstractThreadedSyncAdapter {
 
         //Organize our out response by using gson to instantiate a SearchResult data model.
         Gson gson = new Gson();
-        Article result = gson.fromJson(data, Article.class);
+        Movie result = gson.fromJson(data, Movie.class);
+        Movie resultsMovies = gson.fromJson(data, Movie.class);
 
         //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
-        for (int i = 0; i < result.getResults().size(); i++) {
+        for (int i = 0; i < resultsMovies.getResults().size(); i++) {
             ContentValues values = new ContentValues();
 
-            values.put("title", result.getResults().get(i).getTITLE());
+            values.put("display_title", result.getResults().get(i).getTITLE());
             values.put("url", result.getResults().get(i).getURL());
-            values.put("thumbnail_standard", result.getResults().get(i).getIMAGE());
-            values.put("abstract", result.getResults().get(i).getABSTRACT());
+            values.put("src", result.getResults().get(i).getIMAGE());
+            values.put("summary_short", result.);
+            values.put("summary_short", result.getResults().get(i).getSUMMARY());
 
             mContentResolver.insert(AppContentProvider.CONTENT_URI, values);
 //            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
