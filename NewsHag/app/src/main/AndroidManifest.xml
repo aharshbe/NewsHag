@@ -66,16 +66,20 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
-            <!--<meta-data-->
-                <!--android:name="android.app.searchable"-->
-                <!--android:resource="@xml/searchable" />-->
+            <!-- <meta-data -->
+            <!-- android:name="android.app.searchable" -->
+            <!-- android:resource="@xml/searchable" /> -->
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".NavDDetailView" />
         <activity android:name=".WebViewBiz" />
-        <activity android:name=".WebViewBooks"></activity>
+        <activity android:name=".WebViewBooks" />
+        <activity android:name=".BooksNewsDetail" />
+        <activity android:name=".BizNewsDetail" />
+        <activity android:name=".BizDetailedBrokenUp" />
+        <activity android:name=".BookDetailedBrokenUp"></activity>
     </application>
 
 </manifest>

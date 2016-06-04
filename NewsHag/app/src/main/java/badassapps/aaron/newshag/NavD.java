@@ -152,12 +152,12 @@ public class NavD extends AppCompatActivity
     }
 
     public void clickingBooks(MenuItem item) {
-        Intent intent = new Intent(NavD.this, WebViewBooks.class);
+        Intent intent = new Intent(NavD.this,BooksNewsDetail.class);
         startActivity(intent);
     }
 
     public void clickingBiz(MenuItem item) {
-        Intent intent = new Intent(NavD.this, WebViewBiz.class);
+        Intent intent = new Intent(NavD.this, BizNewsDetail.class);
         startActivity(intent);
     }
 
