@@ -8,10 +8,10 @@
             android:title="Daily Top News"
             android:onClick="clickingTopTen"/>
         <item
-            android:id="@+id/nav_movies"
-            android:icon="@drawable/movies"
-            android:title="Movies"
-            android:onClick="clickingBooks"/>
+            android:id="@+id/nav_tech"
+            android:icon="@drawable/tech2"
+            android:title="Technology"
+            android:onClick="clickingTech"/>
         <item
             android:id="@+id/nav_biz"
             android:icon="@drawable/biz2"

@@ -44,6 +44,7 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
+
         <provider
             android:name=".AppContentProvider"
             android:authorities="badassapps.aaron.newshag.AppContentProvider"
@@ -75,11 +76,12 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".NavDDetailView" />
         <activity android:name=".WebViewBiz" />
-        <activity android:name=".WebViewMovies" />
-        <activity android:name=".BooksNewsDetail" />
+        <activity android:name=".WebViewTech" />
+        <activity android:name=".TechNewsDetail">
+        </activity>
         <activity android:name=".BizNewsDetail" />
         <activity android:name=".BizDetailedBrokenUp" />
-        <activity android:name=".MoviesDetailedBrokenUp"></activity>
+        <activity android:name=".TechDetailedBrokenUp"></activity>
     </application>
 
 </manifest>

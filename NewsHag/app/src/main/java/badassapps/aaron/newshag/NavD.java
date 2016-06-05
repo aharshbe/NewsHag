@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,10 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.NotificationCompat;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -181,8 +177,8 @@ public class NavD extends AppCompatActivity
         Toast.makeText(NavD.this, "Async", Toast.LENGTH_SHORT).show();
     }
 
-    public void clickingBooks(MenuItem item) {
-        Intent intent = new Intent(NavD.this, BooksNewsDetail.class);
+    public void clickingTech(MenuItem item) {
+        Intent intent = new Intent(NavD.this, TechNewsDetail.class);
         startActivity(intent);
 
     }
@@ -285,7 +281,7 @@ public class NavD extends AppCompatActivity
         if (id == R.id.nav_top10) {
             // Handle the camera action
 
-        } else if (id == R.id.nav_movies) {
+        } else if (id == R.id.nav_tech) {
 
         } else if (id == R.id.nav_biz) {
 

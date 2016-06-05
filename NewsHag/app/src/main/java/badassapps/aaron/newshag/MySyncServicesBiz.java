@@ -9,21 +9,21 @@ import android.os.IBinder;
  */
 
 
-public class MySyncServicesMovies extends Service {
+public class MySyncServicesBiz extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static SyncAdapterMovies sSyncAdapter = null;
+    private static SyncAdapterBiz sSyncAdapter3 = null;
 
     @Override
     public void onCreate() {
         synchronized (sSyncAdapterLock) {
-            if (sSyncAdapter == null)
-                sSyncAdapter = new SyncAdapterMovies(getApplicationContext(), true);
+            if (sSyncAdapter3 == null)
+                sSyncAdapter3 = new SyncAdapterBiz(getApplicationContext(), true);
         }
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        return sSyncAdapter.getSyncAdapterBinder();
+        return sSyncAdapter3.getSyncAdapterBinder();
     }
 }

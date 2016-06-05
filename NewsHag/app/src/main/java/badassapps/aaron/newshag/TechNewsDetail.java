@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BooksNewsDetail extends AppCompatActivity {
+public class TechNewsDetail extends AppCompatActivity {
 
     ArrayList<Article> mList;
     CustomAdapter adapter;
@@ -70,18 +70,18 @@ public class BooksNewsDetail extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(BooksNewsDetail.this, Top10NewsD.class);
+                Intent myIntent = new Intent(TechNewsDetail.this, Top10NewsD.class);
 
                 try {
                     cursor.moveToPosition(position);
 
                 } catch (IllegalStateException i) {
                     i.printStackTrace();
-                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TechNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
                 } catch (CursorIndexOutOfBoundsException e) {
                     e.printStackTrace();
-                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TechNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
                 }
 
@@ -98,11 +98,11 @@ public class BooksNewsDetail extends AppCompatActivity {
 
                 } catch (CursorIndexOutOfBoundsException i) {
                     i.printStackTrace();
-                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TechNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
                 } catch (StaleDataException s) {
                     s.printStackTrace();
-                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TechNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
 
                 }
@@ -144,12 +144,12 @@ public class BooksNewsDetail extends AppCompatActivity {
                 Bundle.EMPTY,
                 60);
 
-        Toast.makeText(BooksNewsDetail.this, "Async", Toast.LENGTH_SHORT).show();
+        Toast.makeText(TechNewsDetail.this, "Async", Toast.LENGTH_SHORT).show();
 
     }
 
     public void clickingFavs(MenuItem item) {
-        Intent intent = new Intent(BooksNewsDetail.this, FavoritesD.class);
+        Intent intent = new Intent(TechNewsDetail.this, FavoritesD.class);
         startActivity(intent);
     }
 
@@ -188,7 +188,7 @@ public class BooksNewsDetail extends AppCompatActivity {
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
             if (imageString != null && !imageString.equals("")) {
-                Picasso.with(BooksNewsDetail.this)
+                Picasso.with(TechNewsDetail.this)
                         .load
                                 (imageString).into
                         (image);

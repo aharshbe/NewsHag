@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MoviesDetailedBrokenUp extends AppCompatActivity {
+public class TechDetailedBrokenUp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,7 @@ public class MoviesDetailedBrokenUp extends AppCompatActivity {
     }
 
     public void clickingReadOnBook(View view) {
-        Intent intent = new Intent(MoviesDetailedBrokenUp.this, WebViewMovies.class);
+        Intent intent = new Intent(TechDetailedBrokenUp.this, WebViewTech.class);
         startActivity(intent);
     }
 }

@@ -24,7 +24,7 @@ import java.net.URL;
  */
 
 
-public class SyncAdapterMovies extends AbstractThreadedSyncAdapter {
+public class SyncAdapterTech extends AbstractThreadedSyncAdapter {
 
     // Global variables
     // Define a variable to contain a content resolver instance
@@ -33,7 +33,7 @@ public class SyncAdapterMovies extends AbstractThreadedSyncAdapter {
     /**
      * Set up the sync adapter
      */
-    public SyncAdapterMovies(Context context, boolean autoInitialize) {
+    public SyncAdapterTech(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         /*
          * If your app uses a content resolver, get an instance of it
@@ -81,10 +81,10 @@ public class SyncAdapterMovies extends AbstractThreadedSyncAdapter {
         //Do api call to nytimes to get new data; gson stuff goes here...
         String data = "";
         try {
-            URL url = new URL("https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=46b73ba327704ff7994590206a6eed18");
+            URL url = new URL("https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=46b73ba327704ff7994590206a6eed18");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
-            Log.d("TAG", "startedMovies");
+            Log.d("TAG", "startedTecH");
             InputStream inStream = connection.getInputStream();
             data = getInputData(inStream);
         } catch (Throwable e) {
@@ -93,7 +93,7 @@ public class SyncAdapterMovies extends AbstractThreadedSyncAdapter {
 
         //Organize our out response by using gson to instantiate a SearchResult data model.
         Gson gson = new Gson();
-        Article result = gson.fromJson(data, Article.class);
+        TechArticle result = gson.fromJson(data, TechArticle.class);
 
         //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
         for (int i = 0; i < result.getResults().size(); i++) {

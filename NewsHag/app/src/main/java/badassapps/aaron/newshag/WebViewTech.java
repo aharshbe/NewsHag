@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class WebViewMovies extends AppCompatActivity {
+public class WebViewTech extends AppCompatActivity {
 
     WebView webView;
 
