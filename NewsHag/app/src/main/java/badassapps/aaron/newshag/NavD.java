@@ -117,6 +117,8 @@ public class NavD extends AppCompatActivity
                }catch (IllegalStateException e){
                    e.printStackTrace();
                    System.out.println("Illegal state exception");
+                   Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                   ErrorExceptionDialogue();
                }
 
                 try {
@@ -131,15 +133,19 @@ public class NavD extends AppCompatActivity
                 }catch (CursorIndexOutOfBoundsException e){
                     e.printStackTrace();
                     System.out.println("caught index out of bounds exception");
+                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
                 }catch (StaleDataException i){
                     i.printStackTrace();
                     System.out.println("caught stale data exception");
+                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
                 }
 
 
 
 
-
+//                cursor.close();
 
                 startActivity(myIntent);
             }
@@ -625,10 +631,11 @@ public class NavD extends AppCompatActivity
                     null, null));
             if (cursor != null) {
                 System.out.println("Cursor is not equal to null");
-                cursor.close();
+
                 }
-            cursor.close();
+//            cursor.close();
         }
+
     }
 
     public void clickingFavoritesNav(MenuItem item) {
@@ -638,5 +645,26 @@ public class NavD extends AppCompatActivity
 
     public void clickingInfo(MenuItem item) {
         firstDialogue();
+    }
+
+    public void ErrorExceptionDialogue() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

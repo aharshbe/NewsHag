@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.StaleDataException;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -99,7 +100,14 @@ public class MainActivity extends AppCompatActivity{
                 }catch (CursorIndexOutOfBoundsException e){
                     e.printStackTrace();
                     System.out.println("caught a cursor out of bounds exception cursor move to position");
+                    Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
 
+                }catch (IllegalStateException i){
+                    i.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception cursor move to position");
+                    Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
                 }
 
                 try {
@@ -116,7 +124,16 @@ public class MainActivity extends AppCompatActivity{
                 }catch (CursorIndexOutOfBoundsException e){
                     e.printStackTrace();
                     System.out.println("caught a cursor out of bounds exception");
+                    Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+
                 }
+                catch (StaleDataException s){
+                    s.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }
+                cursor.close();
 
                 startActivity(myIntent);
 
@@ -196,7 +213,10 @@ public class MainActivity extends AppCompatActivity{
                     (imageString).into
                     (image);
                 title.setText(titleString);}
+
+//            cursor.close();
         }
+
     }
 
 
@@ -266,10 +286,32 @@ public class MainActivity extends AppCompatActivity{
                     .CONTENT_URI,
                     null, null,
                     null, null));
-//            if (cursor != null) {
-//                cursor.close();
-//                }
+            if (cursor != null) {
+                System.out.println("Cursor is not equal to null, MainActivity");
+                }
+//            cursor.close();
         }
+    }
+
+    public void ErrorExceptionDialogue() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!"+ "\n\n" + "Try closing and reopening app." );
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
 

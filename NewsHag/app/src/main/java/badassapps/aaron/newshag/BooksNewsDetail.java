@@ -2,11 +2,15 @@ package badassapps.aaron.newshag;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.StaleDataException;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +26,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -66,16 +71,43 @@ public class BooksNewsDetail extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(BooksNewsDetail.this, Top10NewsD.class);
-                cursor.moveToPosition(position);
 
-                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                try {
+                    cursor.moveToPosition(position);
+                }catch (IllegalStateException i ){
+                    i.printStackTrace();
+                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }catch (CursorIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }
+
+                try {
+                    myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                         .COL_TITLE)));
-                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_ABSTRACT)));
-                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_THUMBNAIL)));
-                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_URL)));
+                    myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_ABSTRACT)));
+                    myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_THUMBNAIL)));
+                    myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_URL)));
+
+                }catch (CursorIndexOutOfBoundsException i){
+                    i.printStackTrace();
+                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }
+                catch (StaleDataException s){
+                    s.printStackTrace();
+                    Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+
+                }
+
+
+
                 startActivity(myIntent);
             }
         });
@@ -222,9 +254,30 @@ public class BooksNewsDetail extends AppCompatActivity {
                             .CONTENT_URI,
                     null, null,
                     null, null));
-//            if (cursor != null) {
-//                cursor.close();
-//                }
+            if (cursor != null) {
+                System.out.println("Cursor is not equal to null Books deatail");
+                }
+//            cursor.close();
         }
+    }
+    public void ErrorExceptionDialogue() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!"+ "\n\n" + "Try closing and reopening app." );
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
