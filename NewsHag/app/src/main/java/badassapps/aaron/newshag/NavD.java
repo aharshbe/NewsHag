@@ -20,8 +20,10 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -81,8 +83,10 @@ public class NavD extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         checkFirstRun();
         NOTIFICATIONBox();
+        thread();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -95,102 +99,12 @@ public class NavD extends AppCompatActivity
         navigationView.setItemIconTintList(null);
 
 
-        mAccount = createSyncAccount(this);
-
-        mList = new ArrayList<>();
-        listView = (ListView) findViewById(R.id.listViewNavD);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
-        adapter = new CustomAdapter(this, cursor, 0);
-        listView.setAdapter(adapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Currently needs our attention; need to create intent
-                Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
-
-                try {
-
-                    cursor.moveToPosition(position);
-
-
-                } catch (IllegalStateException e) {
-                    e.printStackTrace();
-                    System.out.println("Illegal state exception");
-                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                    ErrorExceptionDialogue();
-                }
-
-                try {
-                    myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                            .COL_TITLE)));
-                    myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                            .COL_ABSTRACT)));
-                    myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                            .COL_THUMBNAIL)));
-                    myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                            .COL_URL)));
-                } catch (CursorIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                    System.out.println("caught index out of bounds exception");
-                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                    ErrorExceptionDialogue();
-                } catch (StaleDataException i) {
-                    i.printStackTrace();
-                    System.out.println("caught stale data exception");
-                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                    ErrorExceptionDialogue();
-                }
-
-
-                startActivity(myIntent);
-
-            }
-        });
-
-
-        //Step 1 (for content resolver)
-        //new Handler
-        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
-                NewsContentObserver
-                (new Handler()));
-
-        //Performs manual sync
-        Bundle settingsBundle = new Bundle();
-        settingsBundle.putBoolean(
-                ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        settingsBundle.putBoolean(
-                ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        /*
-         * Request the sync for the default account, authority, and
-         * manual sync settings
-         */
-
-        //REQUESTS A SYNC FOR THE ACCOUNT
-        //i.e. if there's no cache, or app hasn't been used for several days...
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-
-        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-        ContentResolver.addPeriodicSync(
-                mAccount,
-                AUTHORITY,
-                Bundle.EMPTY,
-                60);
-
-        Toast.makeText(NavD.this, "Async", Toast.LENGTH_SHORT).show();
     }
 
-    public void clickingBooks(MenuItem item) {
-        Intent intent = new Intent(NavD.this, BooksNewsDetail.class);
-        startActivity(intent);
 
-    }
 
-    public void clickingBiz(MenuItem item) {
-        Intent intent = new Intent(NavD.this, BizNewsDetail.class);
-        startActivity(intent);
-    }
+
+
 
     //CustomAdapter for our Cursor
     public class CustomAdapter extends CursorAdapter {
@@ -203,6 +117,8 @@ public class NavD extends AppCompatActivity
 
 
         }
+
+        //On post execute
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -237,7 +153,7 @@ public class NavD extends AppCompatActivity
         }
     }
 
-    //Start the UI stuff
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -260,6 +176,8 @@ public class NavD extends AppCompatActivity
 //        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -314,6 +232,30 @@ public class NavD extends AppCompatActivity
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
     }
 
+    public void clickingBooks(MenuItem item) {
+        Intent intent = new Intent(NavD.this, BooksNewsDetail.class);
+        startActivity(intent);
+
+    }
+
+    public void clickingBiz(MenuItem item) {
+        Intent intent = new Intent(NavD.this, BizNewsDetail.class);
+        startActivity(intent);
+    }
+
+    public void clickingSettings(MenuItem item) {
+        Intent intent = new Intent(NavD.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickingFavoritesNav(MenuItem item) {
+        Intent intent = new Intent(NavD.this, FavoritesD.class);
+        startActivity(intent);
+    }
+
+    public void clickingInfo(MenuItem item) {
+        firstDialogue();
+    }
 
     public void NOTIFICATIONBox() {
 
@@ -360,7 +302,6 @@ public class NavD extends AppCompatActivity
 
 
     }
-
 
     private void NOTIFICATIONisAllowed() {
 
@@ -419,24 +360,6 @@ public class NavD extends AppCompatActivity
         }
     }
 
-    public void checkFirstRun() {
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
-        if (isFirstRun) {
-
-            MainDialogue();
-
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("isFirstRun", false)
-                    .apply();
-        }
-    }
-
-    public void clickingSettings(MenuItem item) {
-        Intent intent = new Intent(NavD.this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
     public void NoInternetDialogue() {
         AlertDialog.Builder builder7 = new AlertDialog.Builder(this);
         builder7.setIcon(R.mipmap.ic_news);
@@ -470,7 +393,6 @@ public class NavD extends AppCompatActivity
 
     }
 
-    //Dialogue stuff goes here.
     public void firstDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
@@ -580,11 +502,48 @@ public class NavD extends AppCompatActivity
         alert11.show();
     }
 
+    public void ErrorExceptionDialogue() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setIcon(R.mipmap.ic_news);
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Okay",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+
+                        return;
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    public void checkFirstRun() {
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
+        if (isFirstRun) {
+
+            MainDialogue();
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("isFirstRun", false)
+                    .apply();
+        }
+    }
+
+
+
     /**
      * Create a new dummy account for the sync adapter
      *
      * @param context The application context
      */
+
     public static Account createSyncAccount(Context context) {
         // Create the account type and default account
         Account newAccount = new Account(
@@ -624,7 +583,7 @@ public class NavD extends AppCompatActivity
             super(handler);
         }
 
-
+        //On post execute
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
@@ -640,40 +599,137 @@ public class NavD extends AppCompatActivity
 
     }
 
-    public void clickingFavoritesNav(MenuItem item) {
-        Intent intent = new Intent(NavD.this, FavoritesD.class);
-        startActivity(intent);
-    }
-
-    public void clickingInfo(MenuItem item) {
-        firstDialogue();
-    }
-
-    public void ErrorExceptionDialogue() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Okay",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-
-
-                        return;
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         System.out.println("on Destroy happened, navD");
+    }
+
+
+    public void thread() {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+
+
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                Looper.prepare();
+                mAccount = createSyncAccount(NavD.this);
+
+
+                //Step 1 (for content resolver)
+                //new Handler
+                getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
+                        NewsContentObserver
+                        (new Handler()));
+
+                //Performs manual sync
+                Bundle settingsBundle = new Bundle();
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        /*
+         * Request the sync for the default account, authority, and
+         * manual sync settings
+         */
+
+                //REQUESTS A SYNC FOR THE ACCOUNT
+                //i.e. if there's no cache, or app hasn't been used for several days...
+                ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+
+                ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+                ContentResolver.addPeriodicSync(
+                        mAccount,
+                        AUTHORITY,
+                        Bundle.EMPTY,
+                        60);
+
+                Toast.makeText(NavD.this, "Async", Toast.LENGTH_SHORT).show();
+
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+
+                listView = (ListView) findViewById(R.id.listViewNavD);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        mAccount = createSyncAccount(NavD.this);
+
+                        mList = new ArrayList<>();
+                        listView = (ListView) findViewById(R.id.listViewNavD);
+                        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
+                        adapter = new CustomAdapter(NavD.this, cursor, 0);
+                        listView.setAdapter(adapter);
+
+                        Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
+
+                        try {
+
+                            cursor.moveToPosition(position);
+
+
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                            System.out.println("Illegal state exception");
+                            Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                            ErrorExceptionDialogue();
+                        }
+
+                        try {
+                            myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                                    .COL_TITLE)));
+                            myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                                    .COL_ABSTRACT)));
+                            myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                                    .COL_THUMBNAIL)));
+                            myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                                    .COL_URL)));
+                        } catch (CursorIndexOutOfBoundsException e) {
+                            e.printStackTrace();
+                            System.out.println("caught index out of bounds exception");
+                            Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                            ErrorExceptionDialogue();
+                        } catch (StaleDataException i) {
+                            i.printStackTrace();
+                            System.out.println("caught stale data exception");
+                            Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                            ErrorExceptionDialogue();
+                        }
+
+
+                        startActivity(myIntent);
+
+                    }
+                });
+
+
+            }
+
+
+        }.execute();
+
     }
 }
