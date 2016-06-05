@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -91,17 +92,35 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(MainActivity.this, Top10NewsD.class);
-                cursor.moveToPosition(position);
 
-                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_TITLE)));
-                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_ABSTRACT)));
-                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_THUMBNAIL)));
-                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_URL)));
+                try {
+                    cursor.moveToPosition(position);
+
+                }catch (CursorIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception cursor move to position");
+
+                }
+
+                try {
+                    myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_TITLE)));
+                    myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_ABSTRACT)));
+                    myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_THUMBNAIL)));
+                    myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_URL)));
+
+
+                }catch (CursorIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception");
+                }
+
                 startActivity(myIntent);
+
+
             }
         });
 

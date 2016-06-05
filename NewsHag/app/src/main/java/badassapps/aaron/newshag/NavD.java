@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.StaleDataException;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -107,16 +109,38 @@ public class NavD extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Currently needs our attention; need to create intent
                 Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
-                cursor.moveToPosition(position);
 
-                myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+               try {
+
+                   cursor.moveToPosition(position);
+
+               }catch (IllegalStateException e){
+                   e.printStackTrace();
+                   System.out.println("Illegal state exception");
+               }
+
+                try {
+                    myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                         .COL_TITLE)));
-                myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_ABSTRACT)));
-                myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_THUMBNAIL)));
-                myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_URL)));
+                    myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_ABSTRACT)));
+                    myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_THUMBNAIL)));
+                    myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_URL)));
+                }catch (CursorIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                    System.out.println("caught index out of bounds exception");
+                }catch (StaleDataException i){
+                    i.printStackTrace();
+                    System.out.println("caught stale data exception");
+                }
+
+
+
+
+
+
                 startActivity(myIntent);
             }
         });
@@ -599,9 +623,11 @@ public class NavD extends AppCompatActivity
                             .CONTENT_URI,
                     null, null,
                     null, null));
-//            if (cursor != null) {
-//                cursor.close();
-//                }
+            if (cursor != null) {
+                System.out.println("Cursor is not equal to null");
+                cursor.close();
+                }
+            cursor.close();
         }
     }
 
