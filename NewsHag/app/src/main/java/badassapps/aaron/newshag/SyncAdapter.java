@@ -80,7 +80,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         //Do api call to nytimes to get new data; gson stuff goes here...
         String data ="";
         try {
-            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=46b73ba327704ff7994590206a6eed18");
+            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=b1585b6ef4384f33ae02026f928d2d10");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             Log.d("TAG","started");
@@ -105,7 +105,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
             mContentResolver.insert(AppContentProvider.CONTENT_URI,values);
 //            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
+
         }
+
+
     }
 
     /**
@@ -128,4 +131,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         return builder.toString();
     }
+
+
 }

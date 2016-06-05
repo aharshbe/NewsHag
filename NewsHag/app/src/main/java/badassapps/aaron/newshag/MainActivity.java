@@ -53,8 +53,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     ArrayList<Article> mList;
     CustomAdapter adapter;
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity{
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
         adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
@@ -97,13 +96,14 @@ public class MainActivity extends AppCompatActivity{
                 try {
                     cursor.moveToPosition(position);
 
-                }catch (CursorIndexOutOfBoundsException e){
+
+                } catch (CursorIndexOutOfBoundsException e) {
                     e.printStackTrace();
                     System.out.println("caught a cursor out of bounds exception cursor move to position");
                     Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
 
-                }catch (IllegalStateException i){
+                } catch (IllegalStateException i) {
                     i.printStackTrace();
                     System.out.println("caught a cursor out of bounds exception cursor move to position");
                     Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
@@ -121,19 +121,18 @@ public class MainActivity extends AppCompatActivity{
                             .COL_URL)));
 
 
-                }catch (CursorIndexOutOfBoundsException e){
+                } catch (CursorIndexOutOfBoundsException e) {
                     e.printStackTrace();
                     System.out.println("caught a cursor out of bounds exception");
                     Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
 
-                }
-                catch (StaleDataException s){
+                } catch (StaleDataException s) {
                     s.printStackTrace();
                     Toast.makeText(MainActivity.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
                 }
-                cursor.close();
+
 
                 startActivity(myIntent);
 
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity{
 
         //Step 1 (for content resolver)
         //new Handler
-        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI,true,new
+        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
                 NewsContentObserver
                 (new Handler()));
 
@@ -163,12 +162,16 @@ public class MainActivity extends AppCompatActivity{
         //i.e. if there's no cache, or app hasn't been used for several days...
         ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
 
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         ContentResolver.addPeriodicSync(
                 mAccount,
                 AUTHORITY,
                 Bundle.EMPTY,
                 60);
+
+        Toast.makeText(MainActivity.this, "Async", Toast.LENGTH_SHORT).show();
+
+
     }
 
     public void clickingFavs(MenuItem item) {
@@ -185,12 +188,14 @@ public class MainActivity extends AppCompatActivity{
             cursorInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
+
         }
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
@@ -208,13 +213,15 @@ public class MainActivity extends AppCompatActivity{
 
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
-            if (imageString != null && ! imageString.equals("")){ Picasso.with(MainActivity.this)
-                    .load
-                    (imageString).into
-                    (image);
-                title.setText(titleString);}
+            if (imageString != null && !imageString.equals("")) {
+                Picasso.with(MainActivity.this)
+                        .load
+                                (imageString).into
+                        (image);
+                title.setText(titleString);
+            }
 
-//            cursor.close();
+
         }
 
     }
@@ -265,6 +272,7 @@ public class MainActivity extends AppCompatActivity{
              */
         }
         return newAccount;
+
     }
 
     public class NewsContentObserver extends ContentObserver {
@@ -283,20 +291,23 @@ public class MainActivity extends AppCompatActivity{
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
             Cursor cursor = adapter.swapCursor(getContentResolver().query(AppContentProvider
-                    .CONTENT_URI,
+                            .CONTENT_URI,
                     null, null,
                     null, null));
             if (cursor != null) {
-                System.out.println("Cursor is not equal to null, MainActivity");
-                }
-//            cursor.close();
+            }
+
+
         }
+
+
     }
+
 
     public void ErrorExceptionDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!"+ "\n\n" + "Try closing and reopening app." );
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
@@ -312,6 +323,13 @@ public class MainActivity extends AppCompatActivity{
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("On destroy happened Main Activity");
     }
 }
 

@@ -110,32 +110,33 @@ public class NavD extends AppCompatActivity
                 //Currently needs our attention; need to create intent
                 Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
 
-               try {
+                try {
 
-                   cursor.moveToPosition(position);
+                    cursor.moveToPosition(position);
 
-               }catch (IllegalStateException e){
-                   e.printStackTrace();
-                   System.out.println("Illegal state exception");
-                   Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                   ErrorExceptionDialogue();
-               }
+
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                    System.out.println("Illegal state exception");
+                    Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }
 
                 try {
                     myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_TITLE)));
+                            .COL_TITLE)));
                     myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_ABSTRACT)));
                     myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_THUMBNAIL)));
                     myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_URL)));
-                }catch (CursorIndexOutOfBoundsException e){
+                } catch (CursorIndexOutOfBoundsException e) {
                     e.printStackTrace();
                     System.out.println("caught index out of bounds exception");
                     Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
-                }catch (StaleDataException i){
+                } catch (StaleDataException i) {
                     i.printStackTrace();
                     System.out.println("caught stale data exception");
                     Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
@@ -143,11 +144,8 @@ public class NavD extends AppCompatActivity
                 }
 
 
-
-
-//                cursor.close();
-
                 startActivity(myIntent);
+
             }
         });
 
@@ -171,19 +169,22 @@ public class NavD extends AppCompatActivity
 
         //REQUESTS A SYNC FOR THE ACCOUNT
         //i.e. if there's no cache, or app hasn't been used for several days...
-//        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-//
-//        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
-//        ContentResolver.addPeriodicSync(
-//                mAccount,
-//                AUTHORITY,
-//                Bundle.EMPTY,
-//                60);
+        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+        ContentResolver.addPeriodicSync(
+                mAccount,
+                AUTHORITY,
+                Bundle.EMPTY,
+                60);
+
+        Toast.makeText(NavD.this, "Async", Toast.LENGTH_SHORT).show();
     }
 
     public void clickingBooks(MenuItem item) {
-        Intent intent = new Intent(NavD.this,BooksNewsDetail.class);
+        Intent intent = new Intent(NavD.this, BooksNewsDetail.class);
         startActivity(intent);
+
     }
 
     public void clickingBiz(MenuItem item) {
@@ -199,6 +200,7 @@ public class NavD extends AppCompatActivity
             super(context, cursor, flags);
             cursorInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
+
 
         }
 
@@ -230,6 +232,7 @@ public class NavD extends AppCompatActivity
                                 (imageString).into
                         (image);
                 title.setText(titleString);
+
             }
         }
     }
@@ -471,7 +474,7 @@ public class NavD extends AppCompatActivity
     public void firstDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("To search for the latest news based on your favorite topic, click the magnifying glass in the top right-hand corner and enter your topic!");
+        builder1.setMessage("To choose your favorite news topic instead of the top news section, select your favorite topic from the navigation drawer by swiping to the right from the edge of the screen or by clicking the three lines in the top left!");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
@@ -630,10 +633,9 @@ public class NavD extends AppCompatActivity
                     null, null,
                     null, null));
             if (cursor != null) {
-                System.out.println("Cursor is not equal to null");
+            }
 
-                }
-//            cursor.close();
+
         }
 
     }
@@ -666,5 +668,12 @@ public class NavD extends AppCompatActivity
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        System.out.println("on Destroy happened, navD");
     }
 }

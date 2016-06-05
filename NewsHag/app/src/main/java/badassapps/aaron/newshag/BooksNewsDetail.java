@@ -62,7 +62,7 @@ public class BooksNewsDetail extends AppCompatActivity {
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
         adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
@@ -74,11 +74,12 @@ public class BooksNewsDetail extends AppCompatActivity {
 
                 try {
                     cursor.moveToPosition(position);
-                }catch (IllegalStateException i ){
+
+                } catch (IllegalStateException i) {
                     i.printStackTrace();
                     Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
-                }catch (CursorIndexOutOfBoundsException e){
+                } catch (CursorIndexOutOfBoundsException e) {
                     e.printStackTrace();
                     Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
@@ -86,7 +87,7 @@ public class BooksNewsDetail extends AppCompatActivity {
 
                 try {
                     myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                        .COL_TITLE)));
+                            .COL_TITLE)));
                     myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_ABSTRACT)));
                     myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
@@ -94,12 +95,12 @@ public class BooksNewsDetail extends AppCompatActivity {
                     myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_URL)));
 
-                }catch (CursorIndexOutOfBoundsException i){
+
+                } catch (CursorIndexOutOfBoundsException i) {
                     i.printStackTrace();
                     Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
-                }
-                catch (StaleDataException s){
+                } catch (StaleDataException s) {
                     s.printStackTrace();
                     Toast.makeText(BooksNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
@@ -107,15 +108,15 @@ public class BooksNewsDetail extends AppCompatActivity {
                 }
 
 
-
                 startActivity(myIntent);
+
             }
         });
 
 
         //Step 1 (for content resolver)
         //new Handler
-        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI,true,new
+        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
                 NewsContentObserver
                 (new Handler()));
 
@@ -125,6 +126,8 @@ public class BooksNewsDetail extends AppCompatActivity {
                 ContentResolver.SYNC_EXTRAS_MANUAL, true);
         settingsBundle.putBoolean(
                 ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+
         /*
          * Request the sync for the default account, authority, and
          * manual sync settings
@@ -134,12 +137,15 @@ public class BooksNewsDetail extends AppCompatActivity {
         //i.e. if there's no cache, or app hasn't been used for several days...
         ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
 
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         ContentResolver.addPeriodicSync(
                 mAccount,
                 AUTHORITY,
                 Bundle.EMPTY,
                 60);
+
+        Toast.makeText(BooksNewsDetail.this, "Async", Toast.LENGTH_SHORT).show();
+
     }
 
     public void clickingFavs(MenuItem item) {
@@ -156,12 +162,14 @@ public class BooksNewsDetail extends AppCompatActivity {
             cursorInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
+
         }
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
@@ -179,11 +187,14 @@ public class BooksNewsDetail extends AppCompatActivity {
 
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
-            if (imageString != null && ! imageString.equals("")){ Picasso.with(BooksNewsDetail.this)
-                    .load
-                            (imageString).into
-                            (image);
-                title.setText(titleString);}
+            if (imageString != null && !imageString.equals("")) {
+                Picasso.with(BooksNewsDetail.this)
+                        .load
+                                (imageString).into
+                        (image);
+                title.setText(titleString);
+
+            }
         }
     }
 
@@ -255,15 +266,16 @@ public class BooksNewsDetail extends AppCompatActivity {
                     null, null,
                     null, null));
             if (cursor != null) {
-                System.out.println("Cursor is not equal to null Books deatail");
-                }
-//            cursor.close();
+            }
+
+
         }
     }
+
     public void ErrorExceptionDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!"+ "\n\n" + "Try closing and reopening app." );
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
@@ -279,5 +291,11 @@ public class BooksNewsDetail extends AppCompatActivity {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+
+        System.out.println("On destroy happened Books Activity");
     }
 }

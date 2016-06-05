@@ -2,6 +2,8 @@ package badassapps.aaron.newshag;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -44,7 +46,7 @@ public class Top10NewsD extends AppCompatActivity {
         body.setText(detailAbstract);
         title.setText(detailTitle);
 
-        if (detailThumb != null && ! detailThumb.equals("")) {
+        if (detailThumb != null && !detailThumb.equals("")) {
             Picasso.with(Top10NewsD.this)
                     .load
                             (detailThumb).into
@@ -54,13 +56,14 @@ public class Top10NewsD extends AppCompatActivity {
 
     public void clickingReadOn(View view) {
         Intent intent = new Intent(Top10NewsD.this, WebViewForTop10.class);
-        intent.putExtra("url", getIntent().getStringExtra("url") );
+        intent.putExtra("url", getIntent().getStringExtra("url"));
         startActivity(intent);
     }
 
     public void clickingFavsToAdd(MenuItem item) {
 
         Toast.makeText(Top10NewsD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
+
 
     }
 

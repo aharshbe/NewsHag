@@ -62,7 +62,7 @@ public class BizNewsDetail extends AppCompatActivity {
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI,null,null,null,null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
         adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
@@ -72,18 +72,19 @@ public class BizNewsDetail extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(BizNewsDetail.this, Top10NewsD.class);
 
-               try{
-                   cursor.moveToPosition(position);
-               }catch (CursorIndexOutOfBoundsException i){
-                   i.printStackTrace();
-                   Toast.makeText(BizNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                   ErrorExceptionDialogue();
+                try {
+                    cursor.moveToPosition(position);
 
-               }catch (IllegalStateException i){
-                   i.printStackTrace();
-                   Toast.makeText(BizNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                   ErrorExceptionDialogue();
-               }
+                } catch (CursorIndexOutOfBoundsException i) {
+                    i.printStackTrace();
+                    Toast.makeText(BizNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+
+                } catch (IllegalStateException i) {
+                    i.printStackTrace();
+                    Toast.makeText(BizNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+                    ErrorExceptionDialogue();
+                }
 
                 try {
 
@@ -96,12 +97,13 @@ public class BizNewsDetail extends AppCompatActivity {
                     myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_URL)));
                     startActivity(myIntent);
-                }catch (CursorIndexOutOfBoundsException c){
+
+
+                } catch (CursorIndexOutOfBoundsException c) {
                     c.printStackTrace();
                     Toast.makeText(BizNewsDetail.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
                     ErrorExceptionDialogue();
-                }
-                catch (StaleDataException s){
+                } catch (StaleDataException s) {
                     s.printStackTrace();
                 }
             }
@@ -110,7 +112,7 @@ public class BizNewsDetail extends AppCompatActivity {
 
         //Step 1 (for content resolver)
         //new Handler
-        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI,true,new
+        getContentResolver().registerContentObserver(AppContentProvider.CONTENT_URI, true, new
                 NewsContentObserver
                 (new Handler()));
 
@@ -129,13 +131,18 @@ public class BizNewsDetail extends AppCompatActivity {
         //i.e. if there's no cache, or app hasn't been used for several days...
         ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
 
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         ContentResolver.addPeriodicSync(
                 mAccount,
                 AUTHORITY,
                 Bundle.EMPTY,
                 60);
+
+        Toast.makeText(BizNewsDetail.this, "Async", Toast.LENGTH_SHORT).show();
+
+
     }
+
 
     public void clickingFavs(MenuItem item) {
         Intent intent = new Intent(BizNewsDetail.this, FavoritesD.class);
@@ -151,12 +158,14 @@ public class BizNewsDetail extends AppCompatActivity {
             cursorInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
+
         }
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
@@ -174,13 +183,15 @@ public class BizNewsDetail extends AppCompatActivity {
 
             // Populate fields with extracted properties
             abstract1.setText(abstractString);
-            if (imageString != null && ! imageString.equals("")){ Picasso.with(BizNewsDetail.this)
-                    .load
-                            (imageString).into
-                            (image);
-                title.setText(titleString);}
+            if (imageString != null && !imageString.equals("")) {
+                Picasso.with(BizNewsDetail.this)
+                        .load
+                                (imageString).into
+                        (image);
+                title.setText(titleString);
+            }
 
-//            cursor.close();
+
         }
     }
 
@@ -212,6 +223,7 @@ public class BizNewsDetail extends AppCompatActivity {
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(
                         ACCOUNT_SERVICE);
+
         /*
          * Add the account and account type, no password or user data
          * If successful, return the Account object, otherwise report an error.
@@ -230,6 +242,7 @@ public class BizNewsDetail extends AppCompatActivity {
              */
         }
         return newAccount;
+
     }
 
     public class NewsContentObserver extends ContentObserver {
@@ -252,15 +265,16 @@ public class BizNewsDetail extends AppCompatActivity {
                     null, null,
                     null, null));
             if (cursor != null) {
-                System.out.println("Cursor is not equal to null, Biz News");
-                }
-//            cursor.close();
+            }
+
+
         }
     }
+
     public void ErrorExceptionDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!"+ "\n\n" + "Try closing and reopening app." );
+        builder1.setMessage("Please wait to read story, News Hag needs a little londer to load!" + "\n\n" + "Try going back to the nav drawer and checking out top news in the mean time!" + "\n\n" + "Try closing and reopening app.");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
@@ -276,5 +290,12 @@ public class BizNewsDetail extends AppCompatActivity {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+
+        System.out.println("On destroy happened, Biz activity");
+
     }
 }

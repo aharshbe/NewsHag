@@ -45,11 +45,15 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+
     public long addArticle(ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         long insertedRow = db.insert(NEWS_HAG_TABLE, null, values);
         return insertedRow;
     }
+
+
 
     public Cursor getAllArticles() {
         String[] projection = {COL_ID, COL_URL, COL_FAV, COL_TITLE, COL_THUMBNAIL, COL_ABSTRACT};
@@ -57,7 +61,10 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(NEWS_HAG_TABLE,projection,null,null,null,null,null);
         return cursor;
+
     }
+
+
 
     public int deleteAllArticles() {
         SQLiteDatabase db = getWritableDatabase();
@@ -65,4 +72,14 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         int rowsDeleted = db.delete(NEWS_HAG_TABLE,null,null);
         return rowsDeleted;
     }
+
+    @Override
+    public synchronized void close() {
+        super.close();
+
+    }
+
+
 }
+
+

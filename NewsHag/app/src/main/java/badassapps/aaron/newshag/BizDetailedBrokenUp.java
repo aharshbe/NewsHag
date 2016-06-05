@@ -17,5 +17,7 @@ public class BizDetailedBrokenUp extends AppCompatActivity {
     public void clickingReadOnBiz(View view) {
         Intent intent = new Intent(BizDetailedBrokenUp.this, WebViewBiz.class);
         startActivity(intent);
+
+
     }
 }

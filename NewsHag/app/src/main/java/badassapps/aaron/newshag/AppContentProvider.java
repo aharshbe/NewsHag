@@ -38,6 +38,8 @@ public class AppContentProvider extends ContentProvider{
         return false;
 
     }
+
+
     /*
      * Return no type for MIME type
      */
@@ -107,6 +109,7 @@ public class AppContentProvider extends ContentProvider{
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
+
         return rowsDeleted;
     }
     /*
