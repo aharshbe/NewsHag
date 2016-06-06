@@ -23,7 +23,10 @@ public class NavDDetailView extends AppCompatActivity {
 
     TextView body, title;
     ImageView image;
+    private String detailID;
+    private String detailURL;
     Button button;
+
 
 
     @Override
@@ -34,7 +37,8 @@ public class NavDDetailView extends AppCompatActivity {
         String detailTitle = getIntent().getStringExtra("title");
         String detailAbstract = getIntent().getStringExtra("abstract");
         String detailThumb = getIntent().getStringExtra("thumbnail");
-        String detailUrl = getIntent().getStringExtra("url");
+        detailURL = getIntent().getStringExtra("url");
+        detailID = getIntent().getStringExtra("id");
 
         body = (TextView) findViewById(R.id.body);
         title = (TextView) findViewById(R.id.title);
@@ -58,7 +62,7 @@ public class NavDDetailView extends AppCompatActivity {
 
     public void clickingReadOn(View view) {
         Intent intent = new Intent(NavDDetailView.this, WebViewForTop10.class);
-        intent.putExtra("url", getIntent().getStringExtra("url"));
+        intent.putExtra("url", detailURL);
         startActivity(intent);
     }
 
@@ -98,15 +102,17 @@ public class NavDDetailView extends AppCompatActivity {
         //Receive our values from our class and pass them through here!
         ContentValues cv = new ContentValues();
 
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+        cv.put(NewsDBOpenHelper.COL_FAV, "1");
 
+        String id = detailID;  //is the id
 
-        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        long insertColumn = db.update(NewsDBOpenHelper.NEWS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
         db.close();
         Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 }
 

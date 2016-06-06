@@ -24,7 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class SyncAdapter extends AbstractThreadedSyncAdapter{
+public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     // Global variables
     // Define a variable to contain a content resolver instance
@@ -62,6 +62,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
     /**
      * This is the method that contains the logic for our sync.
+     *
      * @param account
      * @param extras
      * @param authority
@@ -75,15 +76,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         //Use our content provider to empty our local database.
         //The data will be replaced with the new results from the api call below.
-        mContentResolver.delete(AppContentProvider.CONTENT_URI,null,null);
+        mContentResolver.delete(AppContentProvider.CONTENT_URI, null, null);
 
         //Do api call to nytimes to get new data; gson stuff goes here...
-        String data ="";
+        String data = "";
         try {
-            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=b1585b6ef4384f33ae02026f928d2d10");
+            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=46b73ba327704ff7994590206a6eed18");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
-            Log.d("TAG","startedSyncAdapterTopNews");
+            Log.d("TAG", "startedSyncAdapterTopNews");
             InputStream inStream = connection.getInputStream();
             data = getInputData(inStream);
         } catch (Throwable e) {
@@ -92,27 +93,54 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         //Organize our out response by using gson to instantiate a SearchResult data model.
         Gson gson = new Gson();
-        Article result = gson.fromJson(data,Article.class);
+        Article result = gson.fromJson(data, Article.class);
 
-        //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
         for (int i = 0; i < result.getResults().size(); i++) {
+
+
             ContentValues values = new ContentValues();
 
-            values.put("title",result.getResults().get(i).getTITLE());
+            values.put("title", result.getResults().get(i).getTITLE());
             values.put("url", result.getResults().get(i).getURL());
             values.put("thumbnail_standard", result.getResults().get(i).getIMAGE());
             values.put("abstract", result.getResults().get(i).getABSTRACT());
 
-            mContentResolver.insert(AppContentProvider.CONTENT_URI,values);
+            mContentResolver.insert(AppContentProvider.CONTENT_URI, values);
 //            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
 
         }
+
+        if (result == null) {
+            try {
+                for (int i = 0; i < result.getResults().size(); i++) {
+
+
+                    ContentValues values = new ContentValues();
+
+                    values.put("title", result.getResults().get(i).getTITLE());
+                    values.put("url", result.getResults().get(i).getURL());
+                    values.put("thumbnail_standard", result.getResults().get(i).getIMAGE());
+                    values.put("abstract", result.getResults().get(i).getABSTRACT());
+
+                    mContentResolver.insert(AppContentProvider.CONTENT_URI, values);
+//            Log.d(TAG,"Latest story: "+result.getResults().get(i).getTitle());
+
+                }
+
+
+            } catch (NullPointerException n) {
+                n.printStackTrace();
+            }
+        }
+
+        //Loop through the results and insert the contents of each NewsItem into the database via our content provider.
 
 
     }
 
     /**
      * Helper method for turning an InputStream into a String.
+     *
      * @param inStream
      * @return String with the contents of the InputStream.
      * @throws IOException
@@ -123,7 +151,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
         String data = null;
 
-        while ((data = reader.readLine()) != null){
+        while ((data = reader.readLine()) != null) {
             builder.append(data);
         }
 

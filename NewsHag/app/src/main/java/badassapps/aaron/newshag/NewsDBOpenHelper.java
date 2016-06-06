@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 //Our favorites database (added by: Aaron on 6/2/2016)
 
 public class NewsDBOpenHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
 
@@ -24,6 +24,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final String COL_TITLE = "title";
     public static final String COL_THUMBNAIL = "thumbnail_standard";
     public static final String COL_ABSTRACT = "abstract";
+
     public NewsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int
             version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -55,6 +56,12 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         return insertedRow;
     }
 
+    public long addFavorite(ContentValues values) {
+        SQLiteDatabase db = getWritableDatabase();
+        long updateRow = db.update(NEWS_HAG_TABLE, null, COL_FAV + " = ?", new String[]{"1"});
+        return updateRow;
+    }
+
 
 
     public Cursor getAllArticles() {
@@ -64,6 +71,16 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(NEWS_HAG_TABLE,projection,null,null,null,null,null);
         return cursor;
 
+    }
+
+    public Cursor getFavorites(){
+        String[] projection = {COL_ID, COL_URL, COL_FAV, COL_TITLE, COL_THUMBNAIL, COL_ABSTRACT};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                NEWS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"1"},
+                null,null,null);
+        return cursor;
     }
 
 
