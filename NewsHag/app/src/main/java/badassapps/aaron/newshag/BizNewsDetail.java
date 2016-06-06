@@ -298,4 +298,6 @@ public class BizNewsDetail extends AppCompatActivity {
         System.out.println("On destroy happened, Biz activity");
 
     }
+
+
 }

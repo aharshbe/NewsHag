@@ -1,6 +1,8 @@
 package badassapps.aaron.newshag;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +52,10 @@ public class NavDDetailView extends AppCompatActivity {
         if (detailThumb != null && !detailThumb.equals("")) {
             Picasso.with(NavDDetailView.this).load(detailThumb).into(image);
         }
+
+
+
+
     }
 
     public void clickingReadOn(View view) {
@@ -60,7 +66,10 @@ public class NavDDetailView extends AppCompatActivity {
 
     public void clickingFavsToAdd(MenuItem item) {
 
+
+
         Toast.makeText(NavDDetailView.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
+        insertFavorite();
 
     }
 
@@ -79,6 +88,29 @@ public class NavDDetailView extends AppCompatActivity {
         inflater.inflate(R.menu.shared_icon, menu);
         inflater.inflate(R.menu.making_fav, menu);
         return true;
+    }
+
+    public void insertFavorite(){
+
+        //Create our db object
+        NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
+
+        //Insert values using writable db
+        SQLiteDatabase db = helpMe.getWritableDatabase();
+
+        //Receive our values from our class and pass them through here!
+        ContentValues cv = new ContentValues();
+
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+
+
+
+
+        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        db.close();
+        Toast.makeText(NavDDetailView.this, "Insert into columnID "+ insertColumn, Toast.LENGTH_SHORT).show();
+
     }
 
 }

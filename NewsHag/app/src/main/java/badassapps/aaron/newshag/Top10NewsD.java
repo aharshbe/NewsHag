@@ -1,6 +1,8 @@
 package badassapps.aaron.newshag;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -63,6 +65,7 @@ public class Top10NewsD extends AppCompatActivity {
     public void clickingFavsToAdd(MenuItem item) {
 
         Toast.makeText(Top10NewsD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
+        insertFavorite();
 
 
     }
@@ -82,6 +85,28 @@ public class Top10NewsD extends AppCompatActivity {
         inflater.inflate(R.menu.shared_icon, menu);
         inflater.inflate(R.menu.making_fav, menu);
         return true;
+    }
+
+    public void insertFavorite(){
+
+        //Create our db object
+        NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
+
+        //Insert values using writable db
+        SQLiteDatabase db = helpMe.getWritableDatabase();
+
+        //Receive our values from our class and pass them through here!
+        ContentValues cv = new ContentValues();
+
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+
+
+
+        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        db.close();
+        Toast.makeText(Top10NewsD.this, "Insert into columnID "+ insertColumn, Toast.LENGTH_SHORT).show();
+
     }
 
 }

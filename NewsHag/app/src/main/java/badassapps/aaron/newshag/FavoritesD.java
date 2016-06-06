@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,9 +18,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,17 +44,65 @@ public class FavoritesD extends AppCompatActivity {
             deleteOnLongPress();
         }
 
+        class CustomAdapter extends CursorAdapter {
+            private LayoutInflater cursorInflater;
+
+            public CustomAdapter(Context context, Cursor cursor, int flags) {
+                super(context, cursor, flags);
+                cursorInflater = (LayoutInflater) context.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+
+
+            }
+
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+
+                // Find fields to populate in inflated template
+                TextView title = (TextView) view.findViewById(R.id.title);
+                TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
+                ImageView image = (ImageView) view.findViewById(R.id.image);
+
+                // Extract properties from cursor
+//            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
+                String titleString = cursor.getString(cursor.getColumnIndexOrThrow("favorites"));
+//                String imageString = cursor.getString(cursor.getColumnIndexOrThrow("thumbnail_" +
+//                        "standard"));
+//                String abstractString = cursor.getString(cursor.getColumnIndexOrThrow("abstract"));
+
+                // Populate fields with extracted properties
+//                abstract1.setText(abstractString);
+//                if (imageString != null && !imageString.equals("")) {
+//                    Picasso.with(FavoritesD.this)
+//                            .load
+//                                    (imageString).into
+//                            (image);
+                    title.setText(titleString);
+
+
+            }
+        }
+
+
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView2);
-        adapter = new CustomAdapter(this, R.layout.fav_items, mList);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
+        CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
 
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CustomAdapter adapter = new CustomAdapter(FavoritesD.this, cursor, 0);
                 mList.remove(position);
+
                 adapter.notifyDataSetChanged();
                 return true;
             }
@@ -65,6 +118,7 @@ public class FavoritesD extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
 
     }
 
@@ -95,10 +149,10 @@ public class FavoritesD extends AppCompatActivity {
                 convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
                 TextView title = (TextView) convertView.findViewById(R.id.title);
                 title.setText(mList.get(position).getTITLE());
-                TextView url = (TextView) convertView.findViewById(R.id.url);
+                TextView url = (TextView) convertView.findViewById(R.id.abstract1);
                 url.setText(mList.get(position).getURL());
-                TextView image = (TextView) convertView.findViewById(R.id.image);
-                image.setText(mList.get(position).getIMAGE());
+                ImageView image = (ImageView) convertView.findViewById(R.id.image);
+//                image.setText(mList.get(position).getIMAGE());
 
             }
             return convertView;
@@ -154,6 +208,8 @@ public class FavoritesD extends AppCompatActivity {
 
         return true;
     }
+
+
 
 
 }

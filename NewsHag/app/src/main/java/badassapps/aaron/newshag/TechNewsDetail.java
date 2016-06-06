@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.StaleDataException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -297,5 +299,28 @@ public class TechNewsDetail extends AppCompatActivity {
         super.onDestroy();
 
         System.out.println("On destroy happened Books Activity");
+    }
+
+    public void insertFavorite(){
+
+        //Create our db object
+        NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
+
+        //Insert values using writable db
+        SQLiteDatabase db = helpMe.getWritableDatabase();
+
+        //Receive our values from our class and pass them through here!
+        ContentValues cv = new ContentValues();
+
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
+        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+
+
+
+
+        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        db.close();
+        Toast.makeText(TechNewsDetail.this, "Insert into columnID "+ insertColumn, Toast.LENGTH_SHORT).show();
+
     }
 }
