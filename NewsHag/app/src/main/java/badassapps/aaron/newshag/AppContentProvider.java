@@ -94,7 +94,7 @@ public class AppContentProvider extends ContentProvider{
                 id = myDB.addArticle(values);
                 break;
             case FAVORITES:
-               // id = myDB.add
+                id = myDB.addFavorite(values);
 
                 break;
             default:

@@ -77,8 +77,7 @@
         <activity android:name=".NavDDetailView" />
         <activity android:name=".WebViewBiz" />
         <activity android:name=".WebViewTech" />
-        <activity android:name=".TechNewsDetail">
-        </activity>
+        <activity android:name=".TechNewsDetail"></activity>
         <activity android:name=".BizNewsDetail" />
         <activity android:name=".BizDetailedBrokenUp" />
         <activity android:name=".TechDetailedBrokenUp"></activity>

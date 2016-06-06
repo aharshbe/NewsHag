@@ -167,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
                 mAccount,
                 AUTHORITY,
                 Bundle.EMPTY,
-                60);
+                6000);
 
-        Toast.makeText(MainActivity.this, "Async", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Syncing...", Toast.LENGTH_SHORT).show();
 
 
     }

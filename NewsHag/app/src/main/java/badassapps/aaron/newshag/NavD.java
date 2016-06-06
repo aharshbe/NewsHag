@@ -121,6 +121,8 @@ public class NavD extends AppCompatActivity
                 try {
                     myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_TITLE)));
+                    myIntent.putExtra("id", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_ID)));
                     myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                             .COL_ABSTRACT)));
                     myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
@@ -131,7 +133,7 @@ public class NavD extends AppCompatActivity
                     e.printStackTrace();
                     System.out.println("caught index out of bounds exception");
                     Toast.makeText(NavD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
-                    ErrorExceptionDialogue();
+//                    ErrorExceptionDialogue();
                 } catch (StaleDataException i) {
                     i.printStackTrace();
                     System.out.println("caught stale data exception");
@@ -172,9 +174,9 @@ public class NavD extends AppCompatActivity
                 mAccount,
                 AUTHORITY,
                 Bundle.EMPTY,
-                60);
+                6000);
 
-        Toast.makeText(NavD.this, "Async", Toast.LENGTH_SHORT).show();
+        Toast.makeText(NavD.this, "Syncing...", Toast.LENGTH_SHORT).show();
     }
 
     public void clickingTech(MenuItem item) {
