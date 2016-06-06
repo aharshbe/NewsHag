@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/abstract1"
-                android:layout_width="262dp"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:maxLines="3"
