@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.StaleDataException;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 public class FavoritesD extends AppCompatActivity {
 
     ArrayList<Article> mList;
-    CustomAdapter adapter;
+//    CustomAdapter adapter;
     ListView listView;
     LayoutInflater layoutInflater;
 
@@ -95,27 +97,69 @@ public class FavoritesD extends AppCompatActivity {
         final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
         CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
+        adapter.swapCursor(cursor);
 
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                CustomAdapter adapter = new CustomAdapter(FavoritesD.this, cursor, 0);
-                mList.remove(position);
-
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                CustomAdapter adapter = new CustomAdapter(FavoritesD.this, cursor, 0);
+//                cursor.moveToPosition(position);
+//
+//                mList.remove(0);
+//
+//                adapter.notifyDataSetChanged();
+//                return true;
+//            }
+//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(FavoritesD.this, WebViewForFavorites.class);
-                myIntent.putExtra("position", position);
-                String nameOfListPrior = mList.get(position).toString();
-                myIntent.putExtra("nameOfListPrior", nameOfListPrior);
+                try {
+                    cursor.moveToPosition(position);
+
+
+                } catch (CursorIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception cursor move to position");
+                    Toast.makeText(FavoritesD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+
+
+                } catch (IllegalStateException i) {
+                    i.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception cursor move to position");
+                    Toast.makeText(FavoritesD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+
+                }
+
+                try {
+                    myIntent.putExtra("title", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_TITLE)));
+                    myIntent.putExtra("abstract", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_ABSTRACT)));
+                    myIntent.putExtra("thumbnail", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_THUMBNAIL)));
+                    myIntent.putExtra("url", cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                            .COL_URL)));
+
+
+                } catch (CursorIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    System.out.println("caught a cursor out of bounds exception");
+                    Toast.makeText(FavoritesD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+
+
+                } catch (StaleDataException s) {
+                    s.printStackTrace();
+                    Toast.makeText(FavoritesD.this, "Please wait to read story, News Hag needs a little londer to load! Try closing and reopening app.", Toast.LENGTH_LONG).show();
+
+                }
+
+
                 startActivity(myIntent);
+
             }
         });
 
@@ -126,38 +170,38 @@ public class FavoritesD extends AppCompatActivity {
         deleteOnLongPress();
     }
 
-    public class CustomAdapter extends ArrayAdapter {
-
-        Context mContext;
-        int mLayoutResource;
-        ArrayList<Article> mList;
-
-        public CustomAdapter(Context context, int layoutResource, ArrayList<Article> list) {
-            super(context, layoutResource, list);
-            mContext = context;
-            mLayoutResource = layoutResource;
-            mList = list;
-            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if (convertView == null) {
-
-                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
-                TextView title = (TextView) convertView.findViewById(R.id.title);
-                title.setText(mList.get(position).getTITLE());
-                TextView url = (TextView) convertView.findViewById(R.id.abstract1);
-                url.setText(mList.get(position).getURL());
-                ImageView image = (ImageView) convertView.findViewById(R.id.image);
-//                image.setText(mList.get(position).getIMAGE());
-
-            }
-            return convertView;
-        }
-    }
+//    public class CustomAdapter extends ArrayAdapter {
+//
+//        Context mContext;
+//        int mLayoutResource;
+//        ArrayList<Article> mList;
+//
+//        public CustomAdapter(Context context, int layoutResource, ArrayList<Article> list) {
+//            super(context, layoutResource, list);
+//            mContext = context;
+//            mLayoutResource = layoutResource;
+//            mList = list;
+//            layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//
+//            if (convertView == null) {
+//
+//                convertView = layoutInflater.inflate(R.layout.list_items, parent, false);
+//                TextView title = (TextView) convertView.findViewById(R.id.title);
+//                title.setText(mList.get(position).getTITLE());
+//                TextView url = (TextView) convertView.findViewById(R.id.abstract1);
+//                url.setText(mList.get(position).getURL());
+//                ImageView image = (ImageView) convertView.findViewById(R.id.image);
+////                image.setText(mList.get(position).getIMAGE());
+//
+//            }
+//            return convertView;
+//        }
+//    }
 
     public void deleteOnLongPress() {
 

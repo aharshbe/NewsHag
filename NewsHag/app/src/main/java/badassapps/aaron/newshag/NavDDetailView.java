@@ -54,8 +54,6 @@ public class NavDDetailView extends AppCompatActivity {
         }
 
 
-
-
     }
 
     public void clickingReadOn(View view) {
@@ -65,7 +63,6 @@ public class NavDDetailView extends AppCompatActivity {
     }
 
     public void clickingFavsToAdd(MenuItem item) {
-
 
 
         Toast.makeText(NavDDetailView.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
@@ -90,7 +87,7 @@ public class NavDDetailView extends AppCompatActivity {
         return true;
     }
 
-    public void insertFavorite(){
+    public void insertFavorite() {
 
         //Create our db object
         NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
@@ -105,11 +102,9 @@ public class NavDDetailView extends AppCompatActivity {
         cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
 
 
-
-
         long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
         db.close();
-        Toast.makeText(NavDDetailView.this, "Insert into columnID "+ insertColumn, Toast.LENGTH_SHORT).show();
+        Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
 
     }
 

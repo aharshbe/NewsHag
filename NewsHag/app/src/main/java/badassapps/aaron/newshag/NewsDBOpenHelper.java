@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 //Our favorites database (added by: Aaron on 6/2/2016)
 
 public class NewsDBOpenHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
 
