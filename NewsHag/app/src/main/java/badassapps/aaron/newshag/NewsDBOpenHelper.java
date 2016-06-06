@@ -14,9 +14,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 //Our favorites database (added by: Aaron on 6/2/2016)
 
 public class NewsDBOpenHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 15;
     public static final String DATABASE_NAME = "News.db";
     public static final String NEWS_HAG_TABLE = "Saved_Stories";
+    public static final String FAVS_HAG_TABLE = "Fav_Stories";
 
     public static final String COL_ID = "_id";
     public static final String COL_URL = "URL";
@@ -39,12 +40,22 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
                 + COL_ID + " INTEGER PRIMARY KEY," + COL_URL
                 + " TEXT, "+ COL_FAV + " INTEGER," + COL_TITLE + " TEXT, " + COL_THUMBNAIL +
                 " TEXT, " + COL_ABSTRACT + " TEXT)";
+
+        String CREATE_FAV_TABLE = "CREATE TABLE " +
+                FAVS_HAG_TABLE + "("
+                + COL_ID + " INTEGER PRIMARY KEY," + COL_URL
+                + " TEXT, "+ COL_FAV + " INTEGER," + COL_TITLE + " TEXT, " + COL_THUMBNAIL +
+                " TEXT, " + COL_ABSTRACT + " TEXT)";
+
         db.execSQL(CREATE_PRODUCTS_TABLE);
+        db.execSQL(CREATE_FAV_TABLE);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + NEWS_HAG_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + FAVS_HAG_TABLE);
         onCreate(db);
     }
 
@@ -78,7 +89,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(
-                NEWS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"1"},
+                FAVS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"1"},
                 null,null,null);
         return cursor;
     }

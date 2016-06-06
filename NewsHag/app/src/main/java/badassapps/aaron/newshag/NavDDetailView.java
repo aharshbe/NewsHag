@@ -106,7 +106,7 @@ public class NavDDetailView extends AppCompatActivity {
 
         String id = detailID;  //is the id
 
-        long insertColumn = db.update(NewsDBOpenHelper.NEWS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
+        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
         db.close();
         Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
 
