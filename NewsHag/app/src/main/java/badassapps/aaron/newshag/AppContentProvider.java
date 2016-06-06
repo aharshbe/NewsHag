@@ -25,6 +25,7 @@ public class AppContentProvider extends ContentProvider{
 
     public static final int ARTICLES = 1;
     public static final int FAVORITES = 2;
+    public static final int REMOVE_FAVORITES = 3;
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -74,6 +75,9 @@ public class AppContentProvider extends ContentProvider{
             case FAVORITES:
                 cursor = myDB.getFavorites();
                 break;
+            case REMOVE_FAVORITES:
+                cursor = myDB.removeFav();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }
@@ -95,6 +99,8 @@ public class AppContentProvider extends ContentProvider{
                 break;
             case FAVORITES:
                 id = myDB.addFavorite(values);
+            case REMOVE_FAVORITES:
+                id = myDB.removeFav(values);
 
                 break;
             default:

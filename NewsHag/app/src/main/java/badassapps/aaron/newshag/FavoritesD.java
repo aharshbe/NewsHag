@@ -1,6 +1,7 @@
 package badassapps.aaron.newshag;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.DatabaseUtils;
 import android.database.StaleDataException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -97,7 +99,7 @@ public class FavoritesD extends AppCompatActivity {
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView2);
         final Cursor cursor = getContentResolver().query(AppContentProvider.FAVORITES_URI, null, null, null, null);
-        CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
+        final CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
         DatabaseUtils.dumpCursor(cursor);
         listView.setAdapter(adapter);
         adapter.changeCursor(cursor);
@@ -107,14 +109,46 @@ public class FavoritesD extends AppCompatActivity {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 //                CustomAdapter adapter = new CustomAdapter(FavoritesD.this, cursor, 0);
-//                cursor.moveToPosition(position);
 //
-//                mList.remove(0);
+//                cursor.moveToPosition(position);
+//                mList.remove(position);
 //
 //                adapter.notifyDataSetChanged();
 //                return true;
 //            }
 //        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                NewsDBOpenHelper helpMe = new NewsDBOpenHelper(FavoritesD.this, "favorites", null, 0);
+
+                //Insert values using writable db
+                SQLiteDatabase db = helpMe.getWritableDatabase();
+
+                //Receive our values from our class and pass them through here!
+
+                cursor.moveToPosition(position);
+
+
+
+                String deleteID = cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper.COL_ID));
+
+
+                long insertColumnValue = db.delete(NewsDBOpenHelper.FAVS_HAG_TABLE, NewsDBOpenHelper.COL_ID + " = ?", new String[]{deleteID});
+
+
+
+
+                db.close();
+                Toast.makeText(FavoritesD.this, "Removed favorite at " + insertColumnValue, Toast.LENGTH_SHORT).show();
+
+
+                return true;
+            }
+        });
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

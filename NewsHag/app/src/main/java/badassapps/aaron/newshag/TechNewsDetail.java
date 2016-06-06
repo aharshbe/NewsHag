@@ -155,6 +155,10 @@ public class TechNewsDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void clickingFavsToAdd(MenuItem item) {
+        insertFavorite();
+    }
+
     //CustomAdapter for our Cursor
     public class CustomAdapter extends CursorAdapter {
         private LayoutInflater cursorInflater;
@@ -301,7 +305,7 @@ public class TechNewsDetail extends AppCompatActivity {
         System.out.println("On destroy happened Books Activity");
     }
 
-    public void insertFavorite(){
+    public void insertFavorite() {
 
         //Create our db object
         NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
@@ -312,15 +316,18 @@ public class TechNewsDetail extends AppCompatActivity {
         //Receive our values from our class and pass them through here!
         ContentValues cv = new ContentValues();
 
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+        cv.put(NewsDBOpenHelper.COL_FAV, "1");
+        cv.put(NewsDBOpenHelper.COL_TITLE,getIntent().getStringExtra("title") );
+        cv.put(NewsDBOpenHelper.COL_URL, getIntent().getStringExtra("url"));
+        cv.put(NewsDBOpenHelper.COL_THUMBNAIL, getIntent().getStringExtra("thumbnail"));
 
+        String id = getIntent().getStringExtra("id");  //is the id
 
-
-
-        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
+        long insertColumnValue = db.update(NewsDBOpenHelper.FAVS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
         db.close();
-        Toast.makeText(TechNewsDetail.this, "Insert into columnID "+ insertColumn, Toast.LENGTH_SHORT).show();
+        Toast.makeText(TechNewsDetail.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
+        Toast.makeText(TechNewsDetail.this, "Inserted data into columnID " + insertColumnValue, Toast.LENGTH_SHORT).show();
 
     }
 }

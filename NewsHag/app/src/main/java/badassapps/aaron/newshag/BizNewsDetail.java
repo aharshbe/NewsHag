@@ -149,6 +149,9 @@ public class BizNewsDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void clickingFavsToAdd(MenuItem item) {
+    }
+
     //CustomAdapter for our Cursor
     public class CustomAdapter extends CursorAdapter {
         private LayoutInflater cursorInflater;

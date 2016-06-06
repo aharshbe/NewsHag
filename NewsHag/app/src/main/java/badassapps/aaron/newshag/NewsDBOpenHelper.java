@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -25,6 +26,8 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final String COL_TITLE = "title";
     public static final String COL_THUMBNAIL = "thumbnail_standard";
     public static final String COL_ABSTRACT = "abstract";
+
+
 
     public NewsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int
             version) {
@@ -59,6 +62,15 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    private void deleteItem() {
+
+
+            SQLiteDatabase db = NewsDBOpenHelper.this.getReadableDatabase();
+            db.delete(FAVS_HAG_TABLE, NewsDBOpenHelper.COL_ID + " = ?", null);
+
+
+    }
+
 
 
     public long addArticle(ContentValues values) {
@@ -71,6 +83,12 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         long updateRow = db.update(NEWS_HAG_TABLE, null, COL_FAV + " = ?", new String[]{"1"});
         return updateRow;
+    }
+
+    public long removeFav(ContentValues values) {
+        SQLiteDatabase db = getWritableDatabase();
+        long RemoveRow = db.update(NEWS_HAG_TABLE, null, COL_FAV + " = ?", new String[]{"0"});
+        return RemoveRow;
     }
 
 
@@ -90,6 +108,16 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(
                 FAVS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"1"},
+                null,null,null);
+        return cursor;
+    }
+
+    public Cursor removeFav(){
+        String[] projection = {COL_ID, COL_URL, COL_FAV, COL_TITLE, COL_THUMBNAIL, COL_ABSTRACT};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                FAVS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"0"},
                 null,null,null);
         return cursor;
     }
