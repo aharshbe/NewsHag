@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.DatabaseUtils;
 import android.database.StaleDataException;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -67,12 +68,12 @@ public class FavoritesD extends AppCompatActivity {
 
                 // Find fields to populate in inflated template
                 TextView title = (TextView) view.findViewById(R.id.title);
-                TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
-                ImageView image = (ImageView) view.findViewById(R.id.image);
+//                TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
+//                ImageView image = (ImageView) view.findViewById(R.id.image);
 
                 // Extract properties from cursor
 //            String urlString = cursor.getString(cursor.getColumnIndexOrThrow("url"));
-                String titleString = cursor.getString(cursor.getColumnIndexOrThrow("favorites"));
+                String titleString = cursor.getString(cursor.getColumnIndexOrThrow("title"));
 //                String imageString = cursor.getString(cursor.getColumnIndexOrThrow("thumbnail_" +
 //                        "standard"));
 //                String abstractString = cursor.getString(cursor.getColumnIndexOrThrow("abstract"));
@@ -96,8 +97,9 @@ public class FavoritesD extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView2);
         final Cursor cursor = getContentResolver().query(AppContentProvider.FAVORITES_URI, null, null, null, null);
         CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
+        DatabaseUtils.dumpCursor(cursor);
         listView.setAdapter(adapter);
-        adapter.swapCursor(cursor);
+        adapter.changeCursor(cursor);
 
 
 //        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

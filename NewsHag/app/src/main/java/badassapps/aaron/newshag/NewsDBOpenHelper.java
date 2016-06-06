@@ -58,8 +58,8 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
 
     public long addFavorite(ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
-        long insertedRow = db.insert(NEWS_HAG_TABLE + "/favorites", null, values);
-        return insertedRow;
+        long updateRow = db.update(NEWS_HAG_TABLE, null, COL_FAV + " = ?", new String[]{"1"});
+        return updateRow;
     }
 
 
@@ -78,9 +78,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(
-                NEWS_HAG_TABLE,projection,
-                COL_FAV + "=?",
-                new String[]{"1"},
+                NEWS_HAG_TABLE,projection, COL_FAV + " = ?", new String[]{"1"},
                 null,null,null);
         return cursor;
     }
