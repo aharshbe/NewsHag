@@ -98,15 +98,19 @@ public class NavDDetailView extends AppCompatActivity {
         //Receive our values from our class and pass them through here!
         ContentValues cv = new ContentValues();
 
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
-        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+//        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("url"));
+//        cv.put(NewsDBOpenHelper.COL_FAV, getIntent().getStringExtra("title"));
+        cv.put(NewsDBOpenHelper.COL_FAV, "1");
 
+        String id = "5";  //is the id
 
-        long insertColumn = db.insert(NewsDBOpenHelper.NEWS_HAG_TABLE, null, cv);
+        long insertColumn = db.update(NewsDBOpenHelper.NEWS_HAG_TABLE, cv, id + "?", new String[]{"1"});
         db.close();
         Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 }
 

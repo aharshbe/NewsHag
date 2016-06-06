@@ -20,13 +20,18 @@ public class AppContentProvider extends ContentProvider{
     private static final String ARTICLES_TABLE = "articles";
     public static final Uri CONTENT_URI = Uri.parse("content://"
             + AUTHORITY + "/" + ARTICLES_TABLE);
+    public static final Uri FAVORITES_URI = Uri.parse("content://"
+            + AUTHORITY + "/" + ARTICLES_TABLE + "/favorites");
 
     public static final int ARTICLES = 1;
+    public static final int FAVORITES = 2;
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sURIMatcher.addURI(AUTHORITY, ARTICLES_TABLE, ARTICLES);
+        sURIMatcher.addURI(AUTHORITY, ARTICLES_TABLE + "/favorites", FAVORITES);
+
     }
     /*
      * Always return true, indicating that the
@@ -66,6 +71,9 @@ public class AppContentProvider extends ContentProvider{
             case ARTICLES:
                 cursor = myDB.getAllArticles();
                 break;
+            case FAVORITES:
+                cursor = myDB.getFavorites();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI");
         }
@@ -84,6 +92,10 @@ public class AppContentProvider extends ContentProvider{
         switch (uriType) {
             case ARTICLES:
                 id = myDB.addArticle(values);
+                break;
+            case FAVORITES:
+               // id = myDB.add
+
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);

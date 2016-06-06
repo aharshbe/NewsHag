@@ -24,6 +24,7 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
     public static final String COL_TITLE = "title";
     public static final String COL_THUMBNAIL = "thumbnail_standard";
     public static final String COL_ABSTRACT = "abstract";
+
     public NewsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int
             version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -64,6 +65,18 @@ public class NewsDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(NEWS_HAG_TABLE,projection,null,null,null,null,null);
         return cursor;
 
+    }
+
+    public Cursor getFavorites(){
+        String[] projection = {COL_ID, COL_URL, COL_FAV, COL_TITLE, COL_THUMBNAIL, COL_ABSTRACT};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                NEWS_HAG_TABLE,projection,
+                COL_FAV + "= ?" ,
+                new String[]{"1"},
+                null,null,null);
+        return cursor;
     }
 
 

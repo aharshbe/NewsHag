@@ -94,7 +94,7 @@ public class FavoritesD extends AppCompatActivity {
 
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView2);
-        final Cursor cursor = getContentResolver().query(AppContentProvider.CONTENT_URI, null, null, null, null);
+        final Cursor cursor = getContentResolver().query(AppContentProvider.FAVORITES_URI, null, null, null, null);
         CustomAdapter adapter = new CustomAdapter(this, cursor, 0);
         listView.setAdapter(adapter);
         adapter.swapCursor(cursor);
