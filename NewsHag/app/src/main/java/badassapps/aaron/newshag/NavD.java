@@ -167,14 +167,14 @@ public class NavD extends AppCompatActivity
 
         //REQUESTS A SYNC FOR THE ACCOUNT
         //i.e. if there's no cache, or app hasn't been used for several days...
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-
-        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-        ContentResolver.addPeriodicSync(
-                mAccount,
-                AUTHORITY,
-                Bundle.EMPTY,
-                6000);
+//        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+//
+//        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+//        ContentResolver.addPeriodicSync(
+//                mAccount,
+//                AUTHORITY,
+//                Bundle.EMPTY,
+//                6000);
 
         Toast.makeText(NavD.this, "Syncing...", Toast.LENGTH_SHORT).show();
     }

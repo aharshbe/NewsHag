@@ -112,8 +112,8 @@ public class NavDDetailView extends AppCompatActivity {
         long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
         long insertColumnValue = db.update(NewsDBOpenHelper.FAVS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
         db.close();
-        Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
-        Toast.makeText(NavDDetailView.this, "Inserted data into columnID " + insertColumnValue, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(NavDDetailView.this, "Inserted data into columnID " + insertColumnValue, Toast.LENGTH_SHORT).show();
 
     }
 
