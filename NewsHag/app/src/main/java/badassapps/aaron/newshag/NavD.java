@@ -280,16 +280,17 @@ public class NavD extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_top10) {
+        if ( id == R.id.nav_settings) {
+
             // Handle the camera action
 
 //        } else if (id == R.id.nav_tech) {
 //
 //        } else if (id == R.id.nav_biz) {
 
-        } else if (id == R.id.nav_favorites) {
+//        } else if (id == R.id.nav_favorites) {
 
-        } else if (id == R.id.nav_settings) {
+//        } else if (id == R.id.nav_top10) {
 
         } else if (id == R.id.nav_share) {
 
@@ -300,10 +301,10 @@ public class NavD extends AppCompatActivity
         return true;
     }
 
-    public void clickingTopTen(MenuItem item) {
-        Intent intent = new Intent(NavD.this, MainActivity.class);
-        startActivity(intent);
-    }
+//    public void clickingTopTen(MenuItem item) {
+//        Intent intent = new Intent(NavD.this, MainActivity.class);
+//        startActivity(intent);
+//    }
 
     public void clickingShareNav(MenuItem item) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -328,10 +329,10 @@ public class NavD extends AppCompatActivity
         } else {
             NoInternetDialogue();
 
-            Intent intent = new Intent(NavD.this, MainActivity.class);
+//            Intent intent = new Intent(NavD.this, MainActivity.class);
             Intent intent1 = new Intent(Settings.ACTION_WIFI_SETTINGS);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent, 0);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent, 0);
             PendingIntent pendingIntent1 = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent1, 0);
 
 
@@ -347,7 +348,7 @@ public class NavD extends AppCompatActivity
             mBuilder.setLights(Color.RED, 500, 500);
             mBuilder.setStyle(new NotificationCompat.InboxStyle());
             mBuilder.setContentText("To use the app, please enable WIFI, Thanks!");
-            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setContentIntent(pendingIntent1);
             mBuilder.setPriority(Notification.PRIORITY_MAX);
             mBuilder.setStyle(bigTextStyle);
             mBuilder.addAction(android.R.drawable.ic_menu_info_details, "Connect WIFI", pendingIntent1);
@@ -367,7 +368,7 @@ public class NavD extends AppCompatActivity
 
         //If there is internet connection then the user will be presented with a notification that displays the top story
         if (networkInfo != null && networkInfo.isConnected()) {
-            Intent intent1 = new Intent(NavD.this, MainActivity.class);
+            Intent intent1 = new Intent(NavD.this, NavD.class);
 
             PendingIntent pendingIntent1 = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent1, 0);
 
@@ -387,7 +388,7 @@ public class NavD extends AppCompatActivity
 
         } else {
             //If there is no internet connection present, the user is presented with a notification that lasts 30 seconds with the option to go into settings and turn it on via click
-            Intent intent = new Intent(NavD.this, MainActivity.class);
+            Intent intent = new Intent(NavD.this, NavD.class);
             Intent intent1 = new Intent(Settings.ACTION_WIFI_SETTINGS);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(NavD.this, (int) System.currentTimeMillis(), intent, 0);

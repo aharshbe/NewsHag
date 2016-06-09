@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_top10"
-            android:icon="@drawable/new2"
-            android:title="Daily Top News"
-            android:onClick="clickingTopTen"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_top10"-->
+            <!--android:icon="@drawable/new2"-->
+            <!--android:title="Daily Top News"-->
+            <!--android:onClick="clickingTopTen"/>-->
         <!--<item-->
             <!--android:id="@+id/nav_tech"-->
             <!--android:icon="@drawable/tech2"-->

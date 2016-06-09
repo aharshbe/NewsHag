@@ -34,15 +34,15 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-        <!--<service android:name=".MySyncServices">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.content.SyncAdapter" />-->
-            <!--</intent-filter>-->
+        <service android:name=".MySyncServices">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
 
-            <!--<meta-data-->
-                <!--android:name="android.content.SyncAdapter"-->
-                <!--android:resource="@xml/syncadapter" />-->
-        <!--</service>-->
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
 
 
         <provider
