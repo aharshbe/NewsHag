@@ -481,7 +481,7 @@ public class NavD extends AppCompatActivity
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        secondDialogue();
+
 
                         return;
                     }
@@ -491,25 +491,25 @@ public class NavD extends AppCompatActivity
         alert11.show();
     }
 
-    public void secondDialogue() {
-        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-        builder2.setIcon(R.mipmap.ic_news);
-        builder2.setMessage("To view the Top 10 most popular stories, swipe from the left or click the 3 lines in the top-left");
-        builder2.setCancelable(true);
-
-        builder2.setPositiveButton(
-                "Okay",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-
-                        return;
-                    }
-                });
-
-        AlertDialog alert12 = builder2.create();
-        alert12.show();
-    }
+//    public void secondDialogue() {
+//        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+//        builder2.setIcon(R.mipmap.ic_news);
+//        builder2.setMessage("To view the Top 10 most popular stories, swipe from the left or click the 3 lines in the top-left");
+//        builder2.setCancelable(true);
+//
+//        builder2.setPositiveButton(
+//                "Okay",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//
+//                        return;
+//                    }
+//                });
+//
+//        AlertDialog alert12 = builder2.create();
+//        alert12.show();
+//    }
 
     public void ThirdDialogue() {
         AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
