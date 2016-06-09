@@ -142,7 +142,7 @@ public class FavoritesD extends AppCompatActivity {
 
 
                 db.close();
-                Toast.makeText(FavoritesD.this, "Removed favorite at " + insertColumnValue, Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavoritesD.this, "Removed favorite, updated reflected on next start of News Hag", Toast.LENGTH_SHORT).show();
 
 
                 return true;
