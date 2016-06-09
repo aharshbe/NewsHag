@@ -179,16 +179,16 @@ public class NavD extends AppCompatActivity
         Toast.makeText(NavD.this, "Syncing...", Toast.LENGTH_SHORT).show();
     }
 
-    public void clickingTech(MenuItem item) {
-        Intent intent = new Intent(NavD.this, TechNewsDetail.class);
-        startActivity(intent);
-
-    }
-
-    public void clickingBiz(MenuItem item) {
-        Intent intent = new Intent(NavD.this, BizNewsDetail.class);
-        startActivity(intent);
-    }
+//    public void clickingTech(MenuItem item) {
+//        Intent intent = new Intent(NavD.this, TechNewsDetail.class);
+//        startActivity(intent);
+//
+//    }
+//
+//    public void clickingBiz(MenuItem item) {
+//        Intent intent = new Intent(NavD.this, BizNewsDetail.class);
+//        startActivity(intent);
+//    }
 
     //CustomAdapter for our Cursor
     public class CustomAdapter extends CursorAdapter {
@@ -283,9 +283,9 @@ public class NavD extends AppCompatActivity
         if (id == R.id.nav_top10) {
             // Handle the camera action
 
-        } else if (id == R.id.nav_tech) {
-
-        } else if (id == R.id.nav_biz) {
+//        } else if (id == R.id.nav_tech) {
+//
+//        } else if (id == R.id.nav_biz) {
 
         } else if (id == R.id.nav_favorites) {
 

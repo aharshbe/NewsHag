@@ -7,16 +7,16 @@
             android:icon="@drawable/new2"
             android:title="Daily Top News"
             android:onClick="clickingTopTen"/>
-        <item
-            android:id="@+id/nav_tech"
-            android:icon="@drawable/tech2"
-            android:title="Technology"
-            android:onClick="clickingTech"/>
-        <item
-            android:id="@+id/nav_biz"
-            android:icon="@drawable/biz2"
-            android:title="Business"
-            android:onClick="clickingBiz"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_tech"-->
+            <!--android:icon="@drawable/tech2"-->
+            <!--android:title="Technology"-->
+            <!--android:onClick="clickingTech"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_biz"-->
+            <!--android:icon="@drawable/biz2"-->
+            <!--android:title="Business"-->
+            <!--android:onClick="clickingBiz"/>-->
         <item
             android:id="@+id/nav_favorites"
             android:icon="@drawable/f1"
