@@ -27,7 +27,6 @@ public class WebViewForTop10 extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().getLoadsImagesAutomatically();
-        webView.setInitialScale(170);
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setWebViewClient(new WebViewClient() {
 
@@ -35,7 +34,7 @@ public class WebViewForTop10 extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                pd.setMessage("Sorry, still loading");
+                pd.setMessage("Loading, just one second more...");
             }
 
 
