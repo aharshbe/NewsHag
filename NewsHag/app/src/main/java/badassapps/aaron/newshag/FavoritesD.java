@@ -41,14 +41,18 @@ public class FavoritesD extends AppCompatActivity {
     ListView listView;
     LayoutInflater layoutInflater;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites_d);
 
+
         if (isFirstTime()) {
             deleteOnLongPress();
         }
+
+
 
         class CustomAdapter extends CursorAdapter {
             private LayoutInflater cursorInflater;
@@ -157,6 +161,7 @@ public class FavoritesD extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(FavoritesD.this, WebViewForFavorites.class);
+
                 Cursor cursor = adapter.getCursor();
 
                 try {
@@ -207,6 +212,8 @@ public class FavoritesD extends AppCompatActivity {
 
 
     }
+
+
 
     public void clickingInfo(MenuItem item) {
         deleteOnLongPress();
@@ -285,15 +292,6 @@ public class FavoritesD extends AppCompatActivity {
         return !ranBefore;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.infobutton, menu);
-
-
-        return true;
-    }
 
     public class CustomAdapter extends CursorAdapter {
         private LayoutInflater cursorInflater;

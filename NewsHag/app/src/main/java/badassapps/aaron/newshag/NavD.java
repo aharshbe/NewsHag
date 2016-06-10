@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.DatabaseUtils;
 import android.database.StaleDataException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -55,6 +57,8 @@ public class NavD extends AppCompatActivity
     CustomAdapter adapter;
     ListView listView;
     LayoutInflater layoutInflater;
+    private String detailID;
+    private String detailURL;
 
 
     // Constants
@@ -67,6 +71,7 @@ public class NavD extends AppCompatActivity
 
     Account mAccount;
 
+
     // Global variables
     // A content resolver for accessing the provider
     ContentResolver mResolver;
@@ -77,6 +82,9 @@ public class NavD extends AppCompatActivity
         setContentView(R.layout.activity_nav_d);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        detailURL = getIntent().getStringExtra("url");
+        detailID = getIntent().getStringExtra("id");
+
 
         checkFirstRun();
         NOTIFICATIONBox();
@@ -105,7 +113,7 @@ public class NavD extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Currently needs our attention; need to create intent
-                Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
+                Intent myIntent = new Intent(NavD.this, WebViewForTop10.class);
 
                 Cursor cursor = adapter.getCursor();
 
@@ -146,6 +154,19 @@ public class NavD extends AppCompatActivity
 
 
                 startActivity(myIntent);
+
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(NavD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
+                insertFavorite();
+
+                return true;
+
 
             }
         });
@@ -681,4 +702,39 @@ public class NavD extends AppCompatActivity
 
         System.out.println("on Destroy happened, navD");
     }
+
+    public void insertFavorite() {
+
+        Cursor cursor = adapter.getCursor();
+
+
+        //Create our db object
+        NewsDBOpenHelper helpMe = new NewsDBOpenHelper(this, "favorites", null, 1);
+
+        //Insert values using writable db
+        SQLiteDatabase db = helpMe.getWritableDatabase();
+
+        //Receive our values from our class and pass them through here!
+        ContentValues cv = new ContentValues();
+
+        cv.put(NewsDBOpenHelper.COL_FAV, "1");
+        cv.put(NewsDBOpenHelper.COL_TITLE,cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                .COL_TITLE)) );
+        cv.put(NewsDBOpenHelper.COL_URL, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                .COL_URL)));
+        cv.put(NewsDBOpenHelper.COL_THUMBNAIL, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                .COL_THUMBNAIL)));
+        cv.put(NewsDBOpenHelper.COL_ABSTRACT, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                .COL_ABSTRACT)));
+
+        String id = detailID;  //is the id
+
+        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
+        long insertColumnValue = db.update(NewsDBOpenHelper.FAVS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
+        db.close();
+
+//        Toast.makeText(NavDDetailView.this, "Inserted data into columnID " + insertColumnValue, Toast.LENGTH_SHORT).show();
+
+    }
+
 }
