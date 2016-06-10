@@ -497,7 +497,7 @@ public class NavD extends AppCompatActivity
     public void firstDialogue() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setIcon(R.mipmap.ic_news);
-        builder1.setMessage("To choose your favorite news topic instead of the top news section, select your favorite topic from the navigation drawer by swiping to the right from the edge of the screen or by clicking the three lines in the top left!");
+        builder1.setMessage("In order to save a story for reading later, just long press on it and checkout your favroties whenever you'd like access.");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
