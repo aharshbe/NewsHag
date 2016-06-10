@@ -67,6 +67,7 @@ public class WebViewForTop10 extends AppCompatActivity {
         insertFavorite();
 
     }
+
     public void clickingShare(MenuItem item) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
@@ -106,14 +107,14 @@ public class WebViewForTop10 extends AppCompatActivity {
         ContentValues cv = new ContentValues();
 
         cv.put(NewsDBOpenHelper.COL_FAV, "1");
-        cv.put(NewsDBOpenHelper.COL_TITLE,getIntent().getStringExtra("title") );
+        cv.put(NewsDBOpenHelper.COL_TITLE, getIntent().getStringExtra("title"));
         cv.put(NewsDBOpenHelper.COL_URL, detailURL);
         cv.put(NewsDBOpenHelper.COL_THUMBNAIL, getIntent().getStringExtra("thumbnail"));
         cv.put(NewsDBOpenHelper.COL_ABSTRACT, getIntent().getStringExtra("abstract"));
 
         String id = detailID;  //is the id
 
-        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
+        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null, cv);
         long insertColumnValue = db.update(NewsDBOpenHelper.FAVS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
         db.close();
 //        Toast.makeText(NavDDetailView.this, "Insert into columnID " + insertColumn, Toast.LENGTH_SHORT).show();

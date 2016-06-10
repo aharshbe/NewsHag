@@ -40,6 +40,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
@@ -111,7 +112,6 @@ public class NavD extends AppCompatActivity
         listView.setAdapter(adapter);
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -165,13 +165,11 @@ public class NavD extends AppCompatActivity
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Animation anim = AnimationUtils.loadAnimation(
-                        NavD.this, android.R.anim.slide_in_left
-
-                );
-
-                listView.getChildAt(position).startAnimation(anim );
-                anim.setDuration(500);
+//                Animation anim = AnimationUtils.loadAnimation(
+//                        NavD.this, android.R.anim.slide_out_right
+//                );
+//                anim.setDuration(500);
+//                listView.getChildAt(position).startAnimation(anim);
 
                 Toast.makeText(NavD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
                 insertFavorite();
@@ -241,6 +239,7 @@ public class NavD extends AppCompatActivity
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         }
+
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
@@ -314,7 +313,7 @@ public class NavD extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if ( id == R.id.nav_settings) {
+        if (id == R.id.nav_settings) {
 
             // Handle the camera action
 
@@ -671,7 +670,6 @@ public class NavD extends AppCompatActivity
             adapter.changeCursor(newCursor);
 
 
-
         }
 
     }
@@ -728,8 +726,8 @@ public class NavD extends AppCompatActivity
         ContentValues cv = new ContentValues();
 
         cv.put(NewsDBOpenHelper.COL_FAV, "1");
-        cv.put(NewsDBOpenHelper.COL_TITLE,cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
-                .COL_TITLE)) );
+        cv.put(NewsDBOpenHelper.COL_TITLE, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
+                .COL_TITLE)));
         cv.put(NewsDBOpenHelper.COL_URL, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
                 .COL_URL)));
         cv.put(NewsDBOpenHelper.COL_THUMBNAIL, cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper
@@ -739,7 +737,7 @@ public class NavD extends AppCompatActivity
 
         String id = detailID;  //is the id
 
-        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null,cv);
+        long insertColumn = db.insert(NewsDBOpenHelper.FAVS_HAG_TABLE, null, cv);
         long insertColumnValue = db.update(NewsDBOpenHelper.FAVS_HAG_TABLE, cv, NewsDBOpenHelper.COL_ID + " = ?", new String[]{id});
         db.close();
 

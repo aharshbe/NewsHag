@@ -39,7 +39,7 @@ import java.util.ArrayList;
 public class FavoritesD extends AppCompatActivity {
 
     ArrayList<Article> mList;
-//    CustomAdapter adapter;
+    //    CustomAdapter adapter;
     ListView listView;
     LayoutInflater layoutInflater;
 
@@ -53,7 +53,6 @@ public class FavoritesD extends AppCompatActivity {
         if (isFirstTime()) {
             deleteOnLongPress();
         }
-
 
 
         class CustomAdapter extends CursorAdapter {
@@ -104,7 +103,6 @@ public class FavoritesD extends AppCompatActivity {
         }
 
 
-
         mList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listView2);
         final Cursor cursor = getContentResolver().query(AppContentProvider.FAVORITES_URI, null, null, null, null);
@@ -137,7 +135,7 @@ public class FavoritesD extends AppCompatActivity {
                         FavoritesD.this, android.R.anim.slide_out_right
                 );
                 anim.setDuration(500);
-                listView.getChildAt(position).startAnimation(anim );
+                listView.getChildAt(position).startAnimation(anim);
 
                 //Insert values using writable db
                 SQLiteDatabase db = helpMe.getWritableDatabase();
@@ -147,17 +145,14 @@ public class FavoritesD extends AppCompatActivity {
                 cursor.moveToPosition(position);
 
 
-
                 String deleteID = cursor.getString(cursor.getColumnIndex(NewsDBOpenHelper.COL_ID));
 
 
                 long insertColumnValue = db.delete(NewsDBOpenHelper.FAVS_HAG_TABLE, NewsDBOpenHelper.COL_ID + " = ?", new String[]{deleteID});
 
 
-
-
                 db.close();
-                Toast.makeText(FavoritesD.this, "Removed favorite, updated reflected on next start of News Hag", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavoritesD.this, "Removed favorite, updated reflected on next start of News Hag", Toast.LENGTH_LONG).show();
 
 
                 return true;
@@ -220,7 +215,6 @@ public class FavoritesD extends AppCompatActivity {
 
 
     }
-
 
 
     public void clickingInfo(MenuItem item) {
@@ -346,8 +340,6 @@ public class FavoritesD extends AppCompatActivity {
         }
 
     }
-
-
 
 
 }
