@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
@@ -130,6 +132,12 @@ public class FavoritesD extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 NewsDBOpenHelper helpMe = new NewsDBOpenHelper(FavoritesD.this, "favorites", null, 0);
+
+                Animation anim = AnimationUtils.loadAnimation(
+                        FavoritesD.this, android.R.anim.slide_out_right
+                );
+                anim.setDuration(500);
+                listView.getChildAt(position).startAnimation(anim );
 
                 //Insert values using writable db
                 SQLiteDatabase db = helpMe.getWritableDatabase();

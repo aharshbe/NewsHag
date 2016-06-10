@@ -38,6 +38,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
@@ -109,6 +111,7 @@ public class NavD extends AppCompatActivity
         listView.setAdapter(adapter);
 
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -161,6 +164,14 @@ public class NavD extends AppCompatActivity
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Animation anim = AnimationUtils.loadAnimation(
+                        NavD.this, android.R.anim.slide_in_left
+
+                );
+
+                listView.getChildAt(position).startAnimation(anim );
+                anim.setDuration(500);
 
                 Toast.makeText(NavD.this, "Added the story to your favorites!", Toast.LENGTH_SHORT).show();
                 insertFavorite();
@@ -233,7 +244,6 @@ public class NavD extends AppCompatActivity
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-
             // Find fields to populate in inflated template
             TextView title = (TextView) view.findViewById(R.id.title);
             TextView abstract1 = (TextView) view.findViewById(R.id.abstract1);
