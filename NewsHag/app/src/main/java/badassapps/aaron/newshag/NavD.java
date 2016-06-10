@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.DatabaseUtils;
 import android.database.StaleDataException;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -106,6 +107,8 @@ public class NavD extends AppCompatActivity
                 //Currently needs our attention; need to create intent
                 Intent myIntent = new Intent(NavD.this, NavDDetailView.class);
 
+                Cursor cursor = adapter.getCursor();
+
                 try {
 
                     cursor.moveToPosition(position);
@@ -167,8 +170,8 @@ public class NavD extends AppCompatActivity
 
         //REQUESTS A SYNC FOR THE ACCOUNT
         //i.e. if there's no cache, or app hasn't been used for several days...
-//        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-//
+        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+
 //        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
 //        ContentResolver.addPeriodicSync(
 //                mAccount,
@@ -627,12 +630,15 @@ public class NavD extends AppCompatActivity
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             //do stuff on UI thread
-            Cursor cursor = adapter.swapCursor(getContentResolver().query(AppContentProvider
+            Cursor newCursor = getContentResolver().query(AppContentProvider
                             .CONTENT_URI,
                     null, null,
-                    null, null));
-            if (cursor != null) {
-            }
+                    null, null);
+
+//            DatabaseUtils.dumpCursor(newCursor);
+
+            adapter.changeCursor(newCursor);
+
 
 
         }

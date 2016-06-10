@@ -106,6 +106,7 @@ public class NavDDetailView extends AppCompatActivity {
         cv.put(NewsDBOpenHelper.COL_TITLE,getIntent().getStringExtra("title") );
         cv.put(NewsDBOpenHelper.COL_URL, detailURL);
         cv.put(NewsDBOpenHelper.COL_THUMBNAIL, getIntent().getStringExtra("thumbnail"));
+        cv.put(NewsDBOpenHelper.COL_ABSTRACT, getIntent().getStringExtra("abstract"));
 
         String id = detailID;  //is the id
 
