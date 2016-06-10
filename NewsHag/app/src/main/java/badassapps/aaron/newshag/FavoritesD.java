@@ -79,9 +79,11 @@ public class FavoritesD extends AppCompatActivity {
                 String titleString = cursor.getString(cursor.getColumnIndexOrThrow("title"));
                 String imageString = cursor.getString(cursor.getColumnIndexOrThrow("thumbnail_" +
                         "standard"));
-//                String abstractString = cursor.getString(cursor.getColumnIndexOrThrow("abstract"));
+                String abstractString = cursor.getString(cursor.getColumnIndexOrThrow("abstract"));
+
 
                 // Populate fields with extracted properties
+                abstract1.setText(abstractString);
 
                 if (imageString != null && !imageString.equals("")) {
                     Picasso.with(FavoritesD.this)
