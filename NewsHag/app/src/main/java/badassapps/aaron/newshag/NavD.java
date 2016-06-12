@@ -342,7 +342,7 @@ public class NavD extends AppCompatActivity
     public void clickingShareNav(MenuItem item) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "https://github.com/aartea/NewsHag");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "https://github.com/aharshbe/NewsHag");
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
     }
 
