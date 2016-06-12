@@ -3,6 +3,8 @@
 ######Photo credit: Winston Chang
 
 ##News Hag: A news aggregator
+#Download News Hag here:
+[News Hag APK](https://docs.google.com/uc?export=download&id=0B7NezlAJoyHJN2tuVVdLT0l1U2M)
 
 #Gif's of Application:
 ###![](readmefiles/gif1.gif)
