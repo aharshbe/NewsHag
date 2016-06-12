@@ -4,7 +4,11 @@
 
 ##News Hag: A news aggregator
 
-
+#Gif's of Application:
+###![](readmefiles/gif1.gif)
+###![](readmefiles/gif2.gif)
+###![](readmefiles/gif3.gif)
+###![](readmefiles/gif4.gif)
 
 
 #### Requirements / Constraints
@@ -95,7 +99,7 @@ Your work must:
 ###![](readmefiles/p2t2.png)
 ##..
 
-######Rest still under construction**
+
 
 
 
