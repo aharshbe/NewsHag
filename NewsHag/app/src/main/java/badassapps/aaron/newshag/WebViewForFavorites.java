@@ -26,7 +26,7 @@ public class WebViewForFavorites extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().getLoadsImagesAutomatically();
-        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setWebViewClient(new WebViewClient() {
 
@@ -34,7 +34,7 @@ public class WebViewForFavorites extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                pd.setMessage("Loading niftier to make things cooler, this could take a little bit...");
+                pd.setMessage("Loading more interesting stuff for your viewing pleasure, this could take a little bit...");
             }
 
 
