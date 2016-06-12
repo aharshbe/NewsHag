@@ -34,7 +34,7 @@ public class WebViewForFavorites extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                pd.setMessage("Loading Java script to make things cooler, this could take a little bit...");
+                pd.setMessage("Loading niftier to make things cooler, this could take a little bit...");
             }
 
 

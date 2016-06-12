@@ -131,11 +131,13 @@ public class FavoritesD extends AppCompatActivity {
 
                 NewsDBOpenHelper helpMe = new NewsDBOpenHelper(FavoritesD.this, "favorites", null, 0);
 
-                Animation anim = AnimationUtils.loadAnimation(
-                        FavoritesD.this, android.R.anim.slide_out_right
-                );
-                anim.setDuration(500);
-                listView.getChildAt(position).startAnimation(anim);
+//                Animation anim = AnimationUtils.loadAnimation(
+//                        FavoritesD.this, android.R.anim.slide_out_right
+//                );
+//                anim.setDuration(500);
+//                listView.getChildAt(position).startAnimation(anim);
+
+                listView.getChildAt(position).setVisibility(View.INVISIBLE);
 
                 //Insert values using writable db
                 SQLiteDatabase db = helpMe.getWritableDatabase();
