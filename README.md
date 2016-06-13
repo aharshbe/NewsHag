@@ -5,6 +5,8 @@
 ##News Hag: A news aggregator
 #Download News Hag here:
 [News Hag APK](https://docs.google.com/uc?export=download&id=0B7NezlAJoyHJN2tuVVdLT0l1U2M)
+#See News Hag on Google Play:
+[News Hag, (Google Play Store link)](https://play.google.com/store/apps/details?id=badassapps.aaron.newshag&hl=en)
 
 #Gif's of Application:
 ###![](readmefiles/gif1.gif)

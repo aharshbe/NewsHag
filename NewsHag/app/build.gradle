@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'MyAndroidKey'
+            keyPassword '0003109711081993'
+            storeFile file('/Users/austin/Desktop/keystores/android.jks')
+            storePassword '00030109711081993Ash'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "badassapps.aaron.newshag"
         minSdkVersion 22
@@ -15,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             debuggable true
@@ -27,7 +35,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
-
     compile 'com.google.code.gson:gson:2.6'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:design:23.4.0'
